@@ -7,7 +7,7 @@
     <p>Téléphone : {{ app.user.phone }}</p>
     <p>Email : {{ app.user.email }}</p>
     <p>Campus :</p>
-    <a href="{{ path('user_update') }}">Modifier mon profil</a>
+    <a href="{{ path('user_update', {'name': app.user.name}) }}">Modifier mon profil</a>
 {% endblock %}
 
 {% block title %}
