@@ -39,9 +39,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 50)]
     private ?string $firstname = null;
 
-    #[ORM\Column]
-    #[Assert\Length(exactly: 10)]
-    private ?int $phone = null;
+    #[ORM\Column(length: 50)]
+    private ?string $phone = null;
 
     #[ORM\Column]
     private ?bool $isActive = null;
@@ -169,12 +168,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getPhone(): ?int
+    public function getPhone(): ?string
     {
         return $this->phone;
     }
 
-    public function setPhone(int $phone): self
+    public function setPhone(string $phone): self
     {
         $this->phone = $phone;
 
