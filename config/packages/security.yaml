@@ -29,7 +29,6 @@ security:
                 # checkbox in the login form (see below), uncomment the
                 # following line to always enable it.
                 #always_remember_me: true
-#                TODO: regarder dans le security yaml le remember me
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
