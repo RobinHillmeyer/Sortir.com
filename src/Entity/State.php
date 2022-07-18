@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\EtatRepository;
+use App\Repository\StateRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: EtatRepository::class)]
-class Etat
+#[ORM\Entity(repositoryClass: StateRepository::class)]
+class State
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

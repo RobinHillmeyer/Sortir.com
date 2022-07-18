@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\SortieRepository;
+use App\Repository\TripRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: SortieRepository::class)]
-class Sortie
+#[ORM\Entity(repositoryClass: TripRepository::class)]
+class Trip
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
