@@ -15,8 +15,9 @@
             <div class="nav-bar">
                 <ul>
                     <li><a href="{{ path('main_home') }}">Accueil</a></li>
-                    <li></li>
-                    <li></li>
+                    {% if app.user %}
+                        <li><a href="{{ path('app_logout') }}">Se déconnecter</a></li>
+                    {% endif %}
                 </ul>
             </div>
     </header>
