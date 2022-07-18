@@ -6,22 +6,32 @@
           content="width=device-width, user-scalable=yes, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{% block title %}{% endblock %}</title>
+
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 <body>
     <header>
         <h1>Sortir.com</h1>
-        <div class="nav-bar">
-            <a href="{{ path('main_home') }}">Accueil</a>
-        </div>
+            <div class="nav-bar">
+                <ul>
+                    <li><a href="{{ path('main_home') }}">Accueil</a></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </div>
     </header>
 
     <main>
-        {% block body %}
-        {% endblock %}
+        <div class="container">
+            {% block body %}
+            {% endblock %}
+        </div>
     </main>
 
     <footer>
-        <div>&copy; {{ "now" | date('Y') }} Sortir.com</div>
+        <div class="container">
+            <div>&copy; {{ "now" | date('Y') }} Sortir.com</div>
+        </div>
     </footer>
 </body>
 </html>
