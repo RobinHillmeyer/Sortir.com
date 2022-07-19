@@ -42,7 +42,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 50)]
     private ?string $phone = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
+//    TODO : rendre actif
     private ?bool $isActive = null;
 
     #[ORM\Column(length: 50, nullable: true)]
