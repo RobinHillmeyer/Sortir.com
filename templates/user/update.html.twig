@@ -5,10 +5,10 @@
     {{ form_start(userForm) }}
     {{ form_widget(userForm) }}
     <button class="btn btn-success">Enregister</button>
-    <button class="btn btn-danger">Annuler</button>
+    <a href="{{ path('user_profile', {'name': app.user.name}) }}" class="btn btn-danger">Annuler</a>
     {{ form_end(userForm) }}
 
-    <a href="{{ path('user_profile', {'name': app.user.name}) }}">Retour</a>
+
 
 
 {% endblock %}
