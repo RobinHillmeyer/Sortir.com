@@ -36,6 +36,10 @@ class Trip
     #[ORM\JoinColumn(nullable: false)]
     private ?Spot $spot = null;
 
+    #[ORM\ManyToOne(inversedBy: 'trips')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Campus $campus = null;
+
 
     public function getId(): ?int
     {
@@ -135,6 +139,18 @@ class Trip
     public function setSpot(?Spot $spot): self
     {
         $this->spot = $spot;
+
+        return $this;
+    }
+
+    public function getCampus(): ?Campus
+    {
+        return $this->campus;
+    }
+
+    public function setCampus(?Campus $campus): self
+    {
+        $this->campus = $campus;
 
         return $this;
     }
