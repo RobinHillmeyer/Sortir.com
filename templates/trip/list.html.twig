@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h2>Liste des sorties</h2>
+    {% for trip in trips %}
+        <ul>
+            <li><a href="{{ path('trip_detail', {'id': trip.id}) }}">{{ trip.name }}</a></li>
+        </ul>
+    {% endfor %}
+{% endblock %}
+
+{% block title %}
+    Liste des Sorties
+{% endblock %}

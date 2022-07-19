@@ -33,8 +33,8 @@ class Trip
     private ?string $information = null;
 
     #[ORM\ManyToOne]
-    #[ORM\Column(nullable: false)]
-    private ?Etat $State = null;
+    #[ORM\Column(nullable: true)] //todo Test création sortie sans état, modifier a false
+    private ?State $State = null;
 
     public function getId(): ?int
     {
