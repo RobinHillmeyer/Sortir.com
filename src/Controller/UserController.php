@@ -28,8 +28,6 @@ class UserController extends AbstractController
     public function update (Request $request, EntityManagerInterface $manager, UserPasswordHasherInterface $hasher): Response
     {
 
-//        TODO : hacher mot de passe et confirmation mdp
-
 
         $userForm = $this->createForm(UserType::class, $this->getUser());
         $userForm->handleRequest($request);

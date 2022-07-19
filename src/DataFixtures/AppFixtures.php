@@ -2,7 +2,9 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Campus;
 use App\Entity\User;
+use App\Repository\CampusRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
@@ -14,6 +16,7 @@ class AppFixtures extends Fixture
     private ObjectManager $manager;
     private UserPasswordHasherInterface $hasher;
     private Generator $generator;
+
 
     public function load(ObjectManager $manager): void
     {
@@ -30,6 +33,8 @@ class AppFixtures extends Fixture
 
     public function addUser()
     {
+        $campus = $this->manager->getRepository(Campus::class)->findAll();
+
         for($i =0 ; $i <= 10 ; $i++){
             $user = new User();
             $user
@@ -38,6 +43,7 @@ class AppFixtures extends Fixture
                 ->setEmail($this->generator->email)
                 ->setPhone($this->generator->phoneNumber)
                 ->setRoles(["ROLE_USER"])
+                ->setCampus($this->generator->randomElement($campus))
                 ->setIsActive(1);
 
             $password = $this->hasher->hashPassword($user, "12345678");
