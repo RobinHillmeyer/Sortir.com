@@ -7,10 +7,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/mon-profil', name: 'user_')]
+#[Route('/{name}', name: 'user_')]
 class UserController extends AbstractController
 {
-    #[Route('/{name}', name: 'profile')]
+    #[Route('', name: 'profile')]
     public function profile(string $name, UserRepository $repository): Response
     {
         $user = $repository->find($name);
@@ -19,7 +19,7 @@ class UserController extends AbstractController
             "user" => $user
         ]);
     }
-    #[Route('/{name}/modifier', name: 'update')]
+    #[Route('/modifier', name: 'update')]
     public function update(string $name, UserRepository $repository): Response
     {
         $user = $repository->find($name);
