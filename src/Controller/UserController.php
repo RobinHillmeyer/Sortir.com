@@ -25,29 +25,29 @@ class UserController extends AbstractController
         ]);
     }
     #[Route('/modifier-profil', name: 'update')]
-    public function update (Request $request, EntityManagerInterface $manager, User $user, UserPasswordHasherInterface $hasher): Response
+    public function update (Request $request, EntityManagerInterface $manager, UserPasswordHasherInterface $hasher): Response
     {
 
 //        TODO : hacher mot de passe et confirmation mdp
 
 
-        $userForm = $this->createForm(UserType::class, $user);
+        $userForm = $this->createForm(UserType::class, $this->getUser());
         $userForm->handleRequest($request);
 
-        $plaintextPassword = $user->getPassword();
+        $plaintextPassword = $this->getUser()->getPassword();
 
         if ($userForm->isSubmitted() && $userForm->isValid()) {
             $hachedPassword = $hasher->hashPassword(
-                $user,
+                $this->getUser(),
                 $plaintextPassword
             );
-            $user->setPassword($hachedPassword);
+            $this->getUser()->setPassword($hachedPassword);
 
-            $manager->persist($user);
+            $manager->persist($this->getUser());
             $manager->flush();
 
             return $this->redirectToRoute('user_profile', [
-                'name' => $user->getName(),
+                'name' => $this->getUser()->getName(),
             ]);
         }
         return $this->render('user/update.html.twig', [

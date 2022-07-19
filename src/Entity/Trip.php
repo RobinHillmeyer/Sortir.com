@@ -32,9 +32,6 @@ class Trip
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $information = null;
 
-    #[ORM\ManyToOne]
-    #[ORM\Column(nullable: true)] //todo Test création sortie sans état, modifier a false
-    private ?State $State = null;
 
     public function getId(): ?int
     {
@@ -121,6 +118,19 @@ class Trip
     public function setState(?Etat $State): self
     {
         $this->State = $State;
+
+        return $this;
+    }
+
+
+    public function getSpot(): ?Spot
+    {
+        return $this->spot;
+    }
+
+    public function setSpot(?Spot $spot): self
+    {
+        $this->spot = $spot;
 
         return $this;
     }
