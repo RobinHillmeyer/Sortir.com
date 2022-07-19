@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,12 +22,16 @@ class UserController extends AbstractController
         ]);
     }
     #[Route('/modifier', name: 'update')]
-    public function update(string $name, UserRepository $repository): Response
+    public function update(string $name, UserRepository $repository, EntityManagerInterface $manager): Response
     {
         $user = $repository->find($name);
 
+        $user = new User();
+        $userForm = $this->createForm(User::class, $user);
+
         return $this->render('user/update.html.twig', [
-            "user" => $user
+            "user" => $user,
+            "userForm" => $userForm->createView()
         ]);
     }
 }

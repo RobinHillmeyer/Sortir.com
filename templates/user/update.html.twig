@@ -2,8 +2,15 @@
 
 {% block body %}
     <h2>Modifier mon profil</h2>
+    {{ form_start(userForm) }}
+    {{ form_widget(userForm) }}
+    <button>Enregister</button>
+    <button>Annuler</button>
+    {{ form_end(userForm) }}
 
     <a href="{{ path('user_profile', {'name': app.user.name}) }}">Retour</a>
+
+
 {% endblock %}
 
 {% block title %}
