@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
 class UserType extends AbstractType
 {
@@ -19,8 +20,9 @@ class UserType extends AbstractType
     {
 
         $builder
-            ->add('username', TextType::class, [
-                'label' => 'Pseudo : '
+            ->add('nickname', TextType::class, [
+                'label' => 'Pseudo : ',
+                'required' => false
             ])
             ->add('firstname', TextType::class, [
                 'label' => 'Prénom : '
@@ -35,9 +37,11 @@ class UserType extends AbstractType
                 'label' => 'Email : '
             ])
             ->add('password', RepeatedType::class, [
+                'mapped' => false,
                 'type' => PasswordType::class,
                 'first_options' => ['label' => 'Mot de passe : '],
-                'second_options' => ['label' => 'Confirmez votre mot de passe : ']
+                'second_options' => ['label' => 'Confirmez votre mot de passe : '],
+                'required' => false
             ])
             ->add('campus', EntityType::class, [
                 'label' => 'Campus : ',

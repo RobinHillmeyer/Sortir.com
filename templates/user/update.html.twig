@@ -3,10 +3,48 @@
 {% block body %}
     <h2>Modifier mon profil</h2>
     {{ form_start(userForm) }}
-    {{ form_widget(userForm) }}
-    <button class="btn btn-success">Enregister</button>
+
+    {{ form_row(userForm.nickname) }}
+    {{ form_row(userForm.firstname) }}
+    {{ form_row(userForm.name) }}
+    {{ form_row(userForm.phone) }}
+    {{ form_row(userForm.email) }}
+    {{ form_row(userForm.campus) }}
+
+
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="passwordModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modifier le mot de passe</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {{ form_widget(userForm.password) }}
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Confirmer</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-success">Enregister</button>
     <a href="{{ path('user_profile', {'name': app.user.name}) }}" class="btn btn-danger">Annuler</a>
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#passwordModal">
+        Changer le mot de passe
+    </button>
+
     {{ form_end(userForm) }}
+
 
 
 

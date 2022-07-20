@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -32,14 +31,17 @@ class UserController extends AbstractController
         $userForm = $this->createForm(UserType::class, $this->getUser());
         $userForm->handleRequest($request);
 
-        $plaintextPassword = $this->getUser()->getPassword();
 
         if ($userForm->isSubmitted() && $userForm->isValid()) {
-            $hachedPassword = $hasher->hashPassword(
-                $this->getUser(),
-                $plaintextPassword
-            );
-            $this->getUser()->setPassword($hachedPassword);
+            $plaintextPassword = $userForm->get('password')->getData();
+
+            if ($plaintextPassword){
+                $hachedPassword = $hasher->hashPassword(
+                    $this->getUser(),
+                    $plaintextPassword
+                );
+                $this->getUser()->setPassword($hachedPassword);
+            }
 
             $manager->persist($this->getUser());
             $manager->flush();

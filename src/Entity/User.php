@@ -48,8 +48,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 //    TODO : rendre actif
     private ?bool $isActive = null;
 
-    #[ORM\Column(length: 50, nullable: true, unique: true)]
-    private ?string $username = null;
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $nickname = null;
 
     #[ORM\ManyToOne(inversedBy: 'users')]
     #[ORM\JoinColumn(nullable: false)]
@@ -99,8 +99,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->username;
+        return (string) $this->email;
     }
+
+
 
     /**
      * @see UserInterface
@@ -180,11 +182,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function setUsername(string $username): self
+    public function setNickname(string $nickname): self
     {
-        $this->username = $username;
+        $this->nickname = $nickname;
 
         return $this;
+    }
+
+    public function getNickname(): ?string
+    {
+        return $this->nickname;
     }
 
     public function getPhone(): ?string
