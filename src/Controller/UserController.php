@@ -52,10 +52,8 @@ class UserController extends AbstractController
                 } catch (FileException $e) {
 
                 }
-
                 $this->getUser()->setProfileImage($newFilename);
             }
-
 
             $plaintextPassword = $userForm->get('password')->getData();
 
