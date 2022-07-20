@@ -61,6 +61,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'promoter', targetEntity: Trip::class)]
     private Collection $trips;
 
+    #[ORM\Column(length: 255)]
+    private ?string $profileImage = null;
+
     public function __construct()
     {
         $this->trips = new ArrayCollection();
@@ -266,6 +269,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getTrip(): Collection
     {
         return $this->trip;
+    }
+
+    public function getProfileImage(): ?string
+    {
+        return $this->profileImage;
+    }
+
+    public function setProfileImage(string $profileImage): self
+    {
+        $this->profileImage = $profileImage;
+
+        return $this;
     }
 
 }

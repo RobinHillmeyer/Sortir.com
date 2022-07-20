@@ -1,6 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    <div class="img-profile">
+        <img src="{{ asset('img/' ~ app.user.profileImage) }}" alt="{{ app.user.name }}">
+    </div>
     <h2>{{ app.user.name }}</h2>
     <p>Prénom : {{ app.user.firstname }}</p>
     <p>Nom : {{ app.user.name }}</p>

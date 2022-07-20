@@ -44,7 +44,8 @@ class AppFixtures extends Fixture
                 ->setPhone($this->generator->phoneNumber)
                 ->setRoles(["ROLE_USER"])
                 ->setCampus($this->generator->randomElement($campus))
-                ->setIsActive(1);
+                ->setIsActive(1)
+                ->setProfileImage('default_image.png');
 
             $password = $this->hasher->hashPassword($user, "12345678");
             $user->setPassword($password);

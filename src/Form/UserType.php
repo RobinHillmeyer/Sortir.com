@@ -7,6 +7,7 @@ use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -47,6 +48,10 @@ class UserType extends AbstractType
                 'label' => 'Campus : ',
                 'class' => Campus::class,
                 'choice_label' => 'name'
+            ])
+            ->add('profileImage', FileType::class, [
+                'mapped' => false,
+                'label' => 'Ma photo : '
             ])
         ;
     }

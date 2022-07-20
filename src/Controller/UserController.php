@@ -6,10 +6,13 @@ use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[Route('/{name}', name: 'user_')]
 class UserController extends AbstractController
@@ -24,7 +27,7 @@ class UserController extends AbstractController
         ]);
     }
     #[Route('/modifier-profil', name: 'update')]
-    public function update (Request $request, EntityManagerInterface $manager, UserPasswordHasherInterface $hasher): Response
+    public function update (Request $request, EntityManagerInterface $manager, UserPasswordHasherInterface $hasher, SluggerInterface $slugger): Response
     {
 
 
@@ -33,6 +36,27 @@ class UserController extends AbstractController
 
 
         if ($userForm->isSubmitted() && $userForm->isValid()) {
+            /**@var UploadedFile $uploadedFile */
+            $uploadedFile = $userForm->get('profileImage')->getData();
+
+            if ($uploadedFile) {
+                $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$uploadedFile->guessExtension();
+
+                try {
+                    $uploadedFile->move(
+                        $this->getParameter('img_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+
+                }
+
+                $this->getUser()->setProfileImage($newFilename);
+            }
+
+
             $plaintextPassword = $userForm->get('password')->getData();
 
             if ($plaintextPassword){
