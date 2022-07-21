@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Trip;
+use App\Form\SpotType;
 use App\Form\TripType;
 use App\Repository\TripRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -20,8 +21,10 @@ class TripController extends AbstractController
     {
         $trip = new Trip();
         $tripForm = $this->createForm(TripType::class, $trip);
+        $spotForm = $this->createForm(SpotType::class, $trip);
 
         $tripForm->handleRequest($request);
+        $spotForm->handleRequest($request);
 
         if ($tripForm->isSubmitted() && $tripForm->isValid()) {
             $entityManager->persist($trip);
@@ -54,6 +57,4 @@ class TripController extends AbstractController
             'trip' => $trip
         ]);
     }
-
-
 }
