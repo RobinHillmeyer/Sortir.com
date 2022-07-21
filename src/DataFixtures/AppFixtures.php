@@ -40,6 +40,7 @@ class AppFixtures extends Fixture
             $user
                 ->setName($this->generator->lastName)
                 ->setFirstname($this->generator->firstName)
+               // ->setNickname("Pseudo".$i)
                 ->setEmail($this->generator->email)
                 ->setPhone($this->generator->phoneNumber)
                 ->setRoles(["ROLE_USER"])

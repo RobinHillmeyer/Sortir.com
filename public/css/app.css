@@ -36,6 +36,9 @@ main {
     border-radius: 50%;
     width: 200px;
     height: 200px;
+    position: absolute;
+    top: 150px;
+    left: 200px;
 }
 
 .container {
