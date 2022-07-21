@@ -32,6 +32,12 @@ main {
     flex: 1;
 }
 
+.image{
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+}
+
 .container {
     max-width: 1000px;
     margin: auto;
@@ -43,5 +49,6 @@ footer {
     height: 50px;
     text-align: center;
 }
+
 
 /*TODO continue css*/
