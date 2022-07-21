@@ -2,16 +2,17 @@
 
 {% block body %}
     {{ form_start(tripForm) }}
-    {{ form_widget(tripForm) }}
-    {{ form_end(tripForm) }}
-
     {{ form_start(spotForm) }}
 
+    {{ form_row(tripForm.name) }}
+    {{ form_row(tripForm.startDateTime) }}
+    {{ form_row(tripForm.registrationDeadLine) }}
+    {{ form_row(tripForm.registrationNumberMax) }}
+    {{ form_row(tripForm.duration) }}
+    {{ form_row(tripForm.information) }}
+    {{ form_row(tripForm.campus) }}
     {{ form_row(spotForm.city) }}
-
-    {{ form_end(spotForm) }}
-
-
+    {{ form_row(tripForm.spot) }}
 
 
 
@@ -28,9 +29,10 @@
                 </div>
                 <div class="modal-body">
 
-                    {{ form_start(spotForm) }}
-                    {{ form_widget(spotForm) }}
-                    {{ form_end(spotForm) }}
+                    {{ form_row(spotForm.name) }}
+                    {{ form_row(spotForm.street) }}
+                    {{ form_row(spotForm.latitude) }}
+                    {{ form_row(spotForm.longitude) }}
 
                 </div>
                 <div class="modal-footer">
@@ -43,9 +45,14 @@
     </div>
 
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#spotModal">
-        Ajouter un Lieu
-    </button>
+{#    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#spotModal">#}
+{#        Ajouter un Lieu#}
+{#    </button>#}
+    <i class="fa-solid fa-circle-plus" data-bs-toggle="modal" data-bs-target="#spotModal"></i>
+    {{ form_end(tripForm) }}
+    {{ form_end(spotForm) }}
+
+
 
 {% endblock %}
 
