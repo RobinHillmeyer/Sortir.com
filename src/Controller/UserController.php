@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Form\UserType;
 use App\Repository\UserRepository;
+use App\Service\UpdateService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -27,7 +28,11 @@ class UserController extends AbstractController
         ]);
     }
     #[Route('/modifier-profil', name: 'update')]
-    public function update (Request $request, EntityManagerInterface $manager, UserPasswordHasherInterface $hasher, SluggerInterface $slugger): Response
+    public function update (Request $request,
+                            EntityManagerInterface $manager,
+                            UserPasswordHasherInterface $hasher,
+                            SluggerInterface $slugger,
+                            UpdateService $updateService): Response
     {
 
 
@@ -36,6 +41,8 @@ class UserController extends AbstractController
 
 
         if ($userForm->isSubmitted() && $userForm->isValid()) {
+
+//            $updateService->uploadPicture();
             /**@var UploadedFile $uploadedFile */
             $uploadedFile = $userForm->get('profileImage')->getData();
 
