@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Spot;
 use App\Entity\Trip;
 use App\Form\SpotType;
 use App\Form\TripType;
@@ -20,8 +21,9 @@ class TripController extends AbstractController
     public function create(EntityManagerInterface $entityManager, Request $request ): Response
     {
         $trip = new Trip();
+        $spot = new Spot();
         $tripForm = $this->createForm(TripType::class, $trip);
-        $spotForm = $this->createForm(SpotType::class, $trip);
+        $spotForm = $this->createForm(SpotType::class, $spot);
 
         $tripForm->handleRequest($request);
         $spotForm->handleRequest($request);
@@ -34,7 +36,8 @@ class TripController extends AbstractController
         }
 
         return $this->render('trip/create.html.twig', [
-            'tripForm' => $tripForm->createView()
+            'tripForm' => $tripForm->createView(),
+            'spotForm' => $spotForm->createView()
         ]);
     }
 

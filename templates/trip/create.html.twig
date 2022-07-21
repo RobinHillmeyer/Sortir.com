@@ -3,6 +3,19 @@
 {% block body %}
     {{ form_start(tripForm) }}
     {{ form_widget(tripForm) }}
+    {{ form_end(tripForm) }}
+
+    {{ form_start(spotForm) }}
+
+    {{ form_row(spotForm.city) }}
+
+    {{ form_end(spotForm) }}
+
+
+
+
+
+
     <button class="btn btn-primary">Créer une Sortie</button>
 
     <!-- Modal -->
@@ -14,7 +27,11 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    {{ form_start(spot) }}
+
+                    {{ form_start(spotForm) }}
+                    {{ form_widget(spotForm) }}
+                    {{ form_end(spotForm) }}
+
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Ajouter un Lieu</button>
@@ -24,9 +41,6 @@
             </div>
         </div>
     </div>
-
-    <button type="submit" class="btn btn-success">Enregister</button>
-    <a href="{{ path('user_profile', {'name': app.user.name}) }}" class="btn btn-danger">Annuler</a>
 
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#spotModal">
