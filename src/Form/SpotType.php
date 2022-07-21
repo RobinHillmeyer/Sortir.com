@@ -16,22 +16,22 @@ class SpotType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => 'Nom : '
+                'label' => 'Nom : ',
             ])
             ->add('street', TextType::class, [
-                'label' => 'Rue : '
+                'label' => 'Rue : ',
             ])
             ->add('latitude', TextType::class, [
-                'label' => 'Latitude : '
+                'label' => 'Latitude : ',
             ])
             ->add('longitude', TextType::class, [
-                'label' => 'Longitude : '
+                'label' => 'Longitude : ',
             ])
             ->add('city', EntityType::class, [
                 'class' => City::class,
                 'placeholder' => '-- Choisissez une ville --',
                 'label' => 'Ville : ',
-                'choice_label' => 'name'
+                'choice_label' => 'name',
             ])
         ;
     }

@@ -26,11 +26,13 @@ class TripType extends AbstractType
             ])
             ->add('startDateTime', DateTimeType::class, [
                 'label' => 'Date et heure de la sortie : ',
-                'widget' => 'single_text'
+                'widget' => 'single_text',
+                'model_timezone' => 'Europe/Paris',
             ])
-            ->add('registrationDeadLine', DateType::class, [
+            ->add('registrationDeadLine', DateTimeType::class, [
                 'label' => 'Date limite d\'inscription',
-                'widget' => 'single_text'
+                'widget' => 'single_text',
+                'model_timezone' => 'Europe/Paris'
             ])
             ->add('registrationNumberMax', TextType::class, [
                 'label' => 'Nombre de places : '
@@ -51,9 +53,14 @@ class TripType extends AbstractType
                 'label' => 'Lieu : ',
                 'class' => Spot::class,
                 'placeholder' => '-- Choisissez un lieu --',
-                'choice_label' => 'name'
+                'choice_label' => 'name',
+                'required' => false
             ])
-            // TODO: recuperer attribut ville a partir de spot (il n'est pas en attribut direct de sortie) idem latitude longitude
+            ->add('spot1', SpotType::class, [
+                'mapped' => false,
+                'label' => null,
+                'required' => false
+            ])
             //->add('State') todo hydrater en auto l'état
         ;
     }

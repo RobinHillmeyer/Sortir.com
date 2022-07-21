@@ -1,21 +1,13 @@
+{% extends 'trip/create.html.twig' %}
 {% extends 'base.html.twig' %}
 
+{% block title %}
+{{parent()}}
+{% endblock %}
+
 {% block body %}
-    {{ form_start(tripForm) }}
-
-
-    {{ form_row(tripForm.name) }}
-    {{ form_row(tripForm.startDateTime) }}
-    {{ form_row(tripForm.registrationDeadLine) }}
-    {{ form_row(tripForm.registrationNumberMax) }}
-    {{ form_row(tripForm.duration) }}
-    {{ form_row(tripForm.information) }}
-    {{ form_row(tripForm.campus) }}
-    {{ form_row(tripForm.spot1.city) }}
-    {{ form_row(tripForm.spot) }}
-
-
-
+    <h2>COUCOU CEST DE LA MERDE</h2>
+    {{ form_start(spotForm) }}
 
     <!-- Modal -->
     <div class="modal fade" id="spotModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -26,32 +18,21 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    {{ form_row(tripForm.spot1) }}
+
+                    {{ form_row(spotForm.name) }}
+                    {{ form_row(spotForm.street) }}
+                    {{ form_row(spotForm.latitude) }}
+                    {{ form_row(spotForm.longitude) }}
 
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Ajouter un Lieu</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+
                 </div>
             </div>
         </div>
     </div>
 
-
-    <button type="submit" class="btn btn-primary">Créer une Sortie</button>
-
-    <!-- Button trigger modal -->
-{#    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#spotModal">#}
-{#        Ajouter un Lieu#}
-{#    </button>#}
-    <i class="fa-solid fa-circle-plus" data-bs-toggle="modal" data-bs-target="#spotModal"></i>
-
-    {{ form_end(tripForm) }}
-
-
-
-{% endblock %}
-
-{% block title %}
-Créer une Sortie
+    {{ form_end(spotForm) }}
 {% endblock %}
