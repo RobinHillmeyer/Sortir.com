@@ -25,22 +25,22 @@ class TripController extends AbstractController
         $trip = new Trip();
         $state = new State();
 
-        $trip->setState($state->setWording("En cours"));
+        $trip->setState($state->setWording("En création"));
         $trip->setPromoter($this->getUser());
 
         $tripForm = $this->createForm(TripType::class, $trip);
 
         $tripForm->handleRequest($request);
 
-        $spot = $tripForm->get('spot1')->getData();
-
-        dump($spot);
 
         if ($tripForm->isSubmitted() && $tripForm->isValid()) {
+            $spot = $tripForm->get('spot1')->getData();
 
+            if ($spot->getName()) {
+                $trip->setSpot($spot);
+            }
             $entityManager->persist($state);
-            $entityManager->persist($spot);
-            dump($spot);
+
             $entityManager->persist($trip);
             $entityManager->flush();
 

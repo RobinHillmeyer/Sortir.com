@@ -36,7 +36,7 @@ class Trip
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $information = null;
 
-    #[ORM\ManyToOne(inversedBy: 'trips')]
+    #[ORM\ManyToOne(inversedBy: 'trips', cascade: ["persist"])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Spot $spot = null;
 
