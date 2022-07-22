@@ -29,7 +29,7 @@ class TripType extends AbstractType
                 'widget' => 'single_text',
                 'model_timezone' => 'Europe/Paris',
             ])
-            ->add('registrationDeadLine', DateTimeType::class, [
+            ->add('registrationDeadLine', DateType::class, [
                 'label' => 'Date limite d\'inscription',
                 'widget' => 'single_text',
                 'model_timezone' => 'Europe/Paris'

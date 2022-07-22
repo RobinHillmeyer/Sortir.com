@@ -1,11 +1,21 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h2>Liste des sorties</h2>
+    <h2>Filtrer les sorties</h2>
     
     <div class="trip-filter">
+
         <form action="">
-            <option value=""></option>
+            <p>
+                <label for="campus-select">Campus</label>
+                <select id="campus-select">
+                    <option value="">-- Filtrer par campus --</option>
+                    {% for campus in campus %}
+                        <option value="{{ campus.name }}">{{ campus.name }}</option>
+                    {% endfor %}
+                </select>
+            </p>
+            <button type="submit">Rechercher</button>
         </form>
     </div>
     <table class="table table-striped table-hover">

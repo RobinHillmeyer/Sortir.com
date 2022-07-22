@@ -8,7 +8,9 @@ use App\Entity\Trip;
 use App\Entity\User;
 use App\Form\SpotType;
 use App\Form\TripType;
+use App\Repository\CampusRepository;
 use App\Repository\TripRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -39,6 +41,7 @@ class TripController extends AbstractController
             if ($spot->getName()) {
                 $trip->setSpot($spot);
             }
+
             $entityManager->persist($state);
 
             $entityManager->persist($trip);
@@ -53,12 +56,14 @@ class TripController extends AbstractController
     }
 
     #[Route('', name: 'list')]
-    public function list(TripRepository $tripRepository): Response
+    public function list(TripRepository $tripRepository, CampusRepository $campusRepository): Response
     {
         $trips = $tripRepository->findAll();
+        $campus = $campusRepository->findAll();
 
         return $this->render('trip/list.html.twig', [
-            'trips' => $trips
+            'trips' => $trips,
+            'campus' => $campus
         ]);
     }
 
