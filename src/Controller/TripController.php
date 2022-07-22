@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 
-#[Route('/sortie', name: 'trip_')]
+#[Route('/', name: 'trip_')]
 class TripController extends AbstractController
 {
     #[Route('/creer-une-sortie', name: 'create')]
@@ -52,7 +52,7 @@ class TripController extends AbstractController
         ]);
     }
 
-    #[Route('/liste-des-sorties', name: 'list')]
+    #[Route('', name: 'list')]
     public function list(TripRepository $tripRepository): Response
     {
         $trips = $tripRepository->findAll();
