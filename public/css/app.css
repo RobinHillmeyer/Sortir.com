@@ -19,6 +19,11 @@ header {
     min-height: 100px;
 }
 
+.logo {
+    width: 50%;
+    height: 50%;
+}
+
 .nav-bar ul {
     display: flex;
     flex-direction: row;
