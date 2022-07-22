@@ -2,7 +2,7 @@
 
 {% block body %}
     <div class="img-profile">
-        <img src="{{ asset('img/' ~ app.user.profileImage) }}" alt="{{ app.user.name }}" class="image">
+        <img src="{{ asset('upload_profile/' ~ app.user.profileImage) }}" alt="{{ app.user.name }}" class="image">
     </div>
     <h2>{{ app.user.name }}</h2>
     <p>Prénom : {{ app.user.firstname }}</p>
