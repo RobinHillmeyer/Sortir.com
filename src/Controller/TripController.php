@@ -9,6 +9,7 @@ use App\Entity\User;
 use App\Form\SpotType;
 use App\Form\TripType;
 use App\Repository\CampusRepository;
+use App\Repository\StateRepository;
 use App\Repository\TripRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -22,12 +23,13 @@ use Symfony\Component\Routing\Annotation\Route;
 class TripController extends AbstractController
 {
     #[Route('/creer-une-sortie', name: 'create')]
-    public function create(EntityManagerInterface $entityManager, Request $request ): Response
+    public function create(EntityManagerInterface $entityManager, Request $request, StateRepository $stateRepository): Response
     {
         $trip = new Trip();
-        $state = new State();
 
-        $trip->setState($state->setWording("En création"));
+//        $trip->setState($state->setWording("En création"));
+
+        $trip->setState($stateRepository->find(1));
         $trip->setPromoter($this->getUser());
 
         $tripForm = $this->createForm(TripType::class, $trip);
@@ -41,8 +43,6 @@ class TripController extends AbstractController
             if ($spot->getName()) {
                 $trip->setSpot($spot);
             }
-
-            $entityManager->persist($state);
 
             $entityManager->persist($trip);
             $entityManager->flush();
