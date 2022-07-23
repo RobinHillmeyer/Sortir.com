@@ -39,13 +39,13 @@ class AppFixtures extends Fixture
             $user
                 ->setName($this->generator->lastName)
                 ->setFirstname($this->generator->firstName)
-               // ->setNickname("Pseudo".$i)
                 ->setEmail($this->generator->email)
                 ->setPhone($this->generator->phoneNumber)
                 ->setRoles(["ROLE_USER"])
                 ->setCampus($this->generator->randomElement($campus))
                 ->setIsActive(1)
-                ->setProfileImage('default_image.png');
+                ->setProfileImage('default_image.png')
+                ->setNickname($user->getFirstname().' '.substr($user->getName(), 0, 1).'.');
 
             $password = $this->hasher->hashPassword($user, "12345678");
             $user->setPassword($password);

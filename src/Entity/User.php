@@ -48,8 +48,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 //    TODO : rendre actif
     private ?bool $isActive = null;
 
-    #[ORM\Column(length: 50, nullable: true)]
-    // TODO : ajouter contrainte unicité + ajouter pseudo en fixture
+    #[ORM\Column(length: 50, nullable: false, unique: true)]
     private ?string $nickname = null;
 
     #[ORM\ManyToOne(inversedBy: 'users')]
