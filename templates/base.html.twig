@@ -20,7 +20,6 @@
                 <ul>
                     {% if app.user %}
                         <li><a href="{{ path('trip_list') }}">Accueil</a></li>
-                        <li><a href="{{ path('trip_create') }}">Créer une sortie</a></li>
                         <li><a href="{{ path('app_logout') }}">Se déconnecter</a></li>
                         <li><a href="{{ path('user_profile', {'name': app.user.name}) }}">Mon profil</a></li>
                     {% endif %}
