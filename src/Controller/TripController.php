@@ -27,7 +27,6 @@ class TripController extends AbstractController
     {
         $trip = new Trip();
 
-//        $trip->setState($state->setWording("En création"));
 
         $trip->setState($stateRepository->find(1));
         $trip->setPromoter($this->getUser());
