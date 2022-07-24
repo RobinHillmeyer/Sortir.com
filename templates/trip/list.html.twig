@@ -3,21 +3,21 @@
 {% block body %}
     <h2>Filtrer les sorties</h2>
     
-    <div class="trip-filter">
+{#    <div class="trip-filter">#}
 
-        <form action="">
-            <p>
-                <label for="campus-select">Campus</label>
-                <select id="campus-select">
-                    <option value="">-- Filtrer par campus --</option>
-                    {% for campus in campus %}
-                        <option value="{{ campus.name }}">{{ campus.name }}</option>
-                    {% endfor %}
-                </select>
-            </p>
-            <button type="submit">Rechercher</button>
-        </form>
-    </div>
+{#        <form action="">#}
+{#            <p>#}
+{#                <label for="campus-select">Campus</label>#}
+{#                <select id="campus-select">#}
+{#                    <option value="">-- Filtrer par campus --</option>#}
+{#                    {% for campus in campus %}#}
+{#                        <option value="{{ campus.name }}">{{ campus.name }}</option>#}
+{#                    {% endfor %}#}
+{#                </select>#}
+{#            </p>#}
+{#            <button type="submit">Rechercher</button>#}
+{#        </form>#}
+{#    </div>#}
     <table class="table table-striped table-hover">
         <thead>
         <tr>
@@ -41,8 +41,11 @@
                 <td>{{ trip.state.wording }}</td>
                 <td>X</td>
                 <td><a href="{{ path('user_profile', {'name': trip.promoter.name}) }}">{{ trip.promoter.name }}</a></td>
-                {% if app.user.id == trip.promoter.id and trip.state != "En création" %}
-                    <td><a href="{{ path('trip_detail', {'id': trip.id}) }}">Modifier</a> - <a href="#">Publier</a></td>
+
+                {% if app.user.id == trip.promoter.id and trip.state.wording == "En Création" %}
+                    <td><a href="{{ path('trip_detail', {'id': trip.id}) }}">Modifier</a> - <a href="{{ path('trip_publish', {'id': trip.id}) }}">Publier</a></td>
+                {% elseif app.user.id == trip.promoter.id and trip.state.wording == "Ouverte" %}
+                    <td><a href="{{ path('trip_detail', {'id': trip.id}) }}">Afficher</a> - <a href="#">Annuler</a></td>
                 {% else %}
                     <td><a href="{{ path('trip_detail', {'id': trip.id}) }}">Afficher</a></td>
                 {% endif %}

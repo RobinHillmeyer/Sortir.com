@@ -76,4 +76,15 @@ class TripController extends AbstractController
             'trip' => $trip
         ]);
     }
+
+    #[Route('{id}', name: 'publish')]
+    public function publish(EntityManagerInterface $entityManager, StateRepository $stateRepository, TripRepository $tripRepository, int $id): Response {
+        $trip = $tripRepository->find($id);
+        $trip->setState($stateRepository->find(2));
+
+        $entityManager->persist($trip);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('trip_list');
+    }
 }
