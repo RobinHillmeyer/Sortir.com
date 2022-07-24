@@ -28,6 +28,7 @@ class Trip
     private ?int $duration = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Assert\GreaterThanOrEqual(propertyPath: "startDateTime")]
     private ?\DateTimeInterface $registrationDeadLine = null;
 
     #[ORM\Column]
