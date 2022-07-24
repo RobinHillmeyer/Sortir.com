@@ -58,6 +58,10 @@ class Trip
     #[ORM\JoinColumn(nullable: false)]
     private ?User $promoter = null;
 
+    #[ORM\Column]
+    #[Assert\LessThanOrEqual(propertyPath: "registrationNumberMax", message: "La sortie est complète")]
+    private ?int $registeredNumber = 0;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -215,6 +219,18 @@ class Trip
     public function setPromoter(?User $promoter): self
     {
         $this->promoter = $promoter;
+
+        return $this;
+    }
+
+    public function getRegisteredNumber(): ?int
+    {
+        return $this->registeredNumber;
+    }
+
+    public function setRegisteredNumber(int $registeredNumber): self
+    {
+        $this->registeredNumber = $registeredNumber;
 
         return $this;
     }
