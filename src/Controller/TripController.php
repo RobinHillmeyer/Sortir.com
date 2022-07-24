@@ -46,6 +46,7 @@ class TripController extends AbstractController
             $entityManager->persist($trip);
             $entityManager->flush();
 
+            $this->addFlash('success', 'La sortie a été créée.');
             return $this->redirectToRoute('trip_list');
         }
 

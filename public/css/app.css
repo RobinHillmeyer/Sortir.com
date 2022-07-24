@@ -40,6 +40,16 @@ main {
     flex: 1;
 }
 
+.flash {
+    padding: 20px;
+    font-weight: bold;
+    font-size: 1.4rem;
+    margin: 1rem 5rem;
+    border-radius: 5px;
+}
+
+.flash-success {background-color: lawngreen}
+
 i {
     font-size: 3rem;
     transition: 0.3s;
