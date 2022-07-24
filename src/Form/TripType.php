@@ -61,7 +61,6 @@ class TripType extends AbstractType
                 'label' => null,
                 'required' => false
             ])
-            //->add('State') todo hydrater en auto l'état
         ;
     }
 
