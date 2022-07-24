@@ -41,7 +41,12 @@
                 <td>{{ trip.state.wording }}</td>
                 <td>X</td>
                 <td><a href="{{ path('user_profile', {'name': trip.promoter.name}) }}">{{ trip.promoter.name }}</a></td>
-                <td><a href="{{ path('trip_detail', {'id': trip.id}) }}">Afficher</a></td>
+                {% if app.user.id == trip.promoter.id and trip.state != "En création" %}
+                    <td><a href="{{ path('trip_detail', {'id': trip.id}) }}">Modifier</a> - <a href="#">Publier</a></td>
+                {% else %}
+                    <td><a href="{{ path('trip_detail', {'id': trip.id}) }}">Afficher</a></td>
+                {% endif %}
+
             </tr>
         {% endfor %}
 
