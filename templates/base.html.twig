@@ -22,10 +22,13 @@
                         <li><a href="{{ path('trip_list') }}">Accueil</a></li>
                         <li><a href="{{ path('app_logout') }}">Se déconnecter</a></li>
                         <li><a href="{{ path('user_profile', {'name': app.user.name}) }}">Mon profil</a></li>
-                    {% endif %}
                 </ul>
+                Date du jour : {{ "now" | date('d/m/Y') }}<br>
+                Participant : {{ app.user.nickname }}
+                {% endif %}
             </div>
     </header>
+
 
     {# read and display all flash messages #}
     {% for label, messages in app.flashes %}
