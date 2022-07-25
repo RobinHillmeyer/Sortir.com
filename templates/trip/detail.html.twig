@@ -21,7 +21,7 @@
 
 
 
-    <table class="table">
+    <table class="table table-striped table-hover">
         <thead>
         <tr>
             <th scope="col">Pseudo</th>
@@ -29,12 +29,12 @@
         </tr>
         </thead>
         <tbody>
-{#        {% for user in users %}#}
-{#            <tr>#}
-{#                <td>#}{# TODO: mettre pseudo #}{#</td>#}
-{#                <td>#}{# TODO: mettre nom prenom inscrit #}{#</td>#}
-{#            </tr>#}
-{#        {% endfor %}#}
+        {% for user in users %}
+            <tr>
+                <td>{{ user.nickname }}</td>
+                <td>{{ user.firstname }} {{ user.name | upper }}</td>
+            </tr>
+        {% endfor %}
         </tbody>
     </table>
 {% endblock %}
