@@ -164,7 +164,8 @@ class TripController extends AbstractController
         /**@var \App\Entity\User $user*/
         $user = $this->getUser();
 
-        if ($trip->getUsers()->count() < $trip->getRegistrationNumberMax()) {
+        if ($trip->getUsers()->count() < $trip->getRegistrationNumberMax() and $trip->getState()->getWording() == "Ouverte") {
+            // TODO: ajouter une contrainte de date dans le if
             $trip->addUser($user);
             $entityManager->persist($user);
             $entityManager->flush();
