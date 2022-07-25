@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Form\UserType;
 use App\Repository\UserRepository;
-use App\Service\UpdateService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -19,9 +18,9 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class UserController extends AbstractController
 {
     #[Route('', name: 'profile')]
-    public function profile(string $name, UserRepository $repository): Response
+    public function profile(string $name, UserRepository $userRepository): Response
     {
-        $user = $repository->find($name);
+        $user = $userRepository->find($name);
 
         return $this->render('user/profile.html.twig', [
             "user" => $user
