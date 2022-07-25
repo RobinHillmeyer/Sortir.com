@@ -56,6 +56,11 @@ i {
     color: #275ED7;
 }
 
+.check {
+    font-size: 2rem;
+    color: #43b243;
+}
+
 i:hover {
     cursor: pointer;
     font-size: 3.5rem;
