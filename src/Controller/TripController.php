@@ -97,6 +97,7 @@ class TripController extends AbstractController
         $entityManager->flush();
 
         return $this->redirectToRoute('trip_list');
+        // TODO render -> page annuler avec formulaire
     }
 
 }
