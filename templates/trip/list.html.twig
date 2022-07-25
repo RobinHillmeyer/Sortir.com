@@ -45,7 +45,11 @@
                 <td>{{ trip.registrationDeadLine | date('d-m-Y') }}</td>
                 <td>{{ trip.users | length }} / {{ trip.registrationNumberMax }}</td>
                 <td>{{ trip.state.wording }}</td>
-                <td><i class="check fa-solid fa-check"></i></td>
+                {% if trip.users.contains(app.user) %}
+                    <td><i class="check fa-solid fa-check"></i></td>
+                {% else %}
+                    <td></td>
+                {% endif %}
                 <td><a href="{{ path('user_profile', {'name': trip.promoter.name}) }}">{{ trip.promoter.name }}</a></td>
 
                 {% if app.user.id == trip.promoter.id and trip.state.wording == "En Création" %}
@@ -54,8 +58,10 @@
                     <td><a href="{{ path('trip_detail', {'id': trip.id}) }}">Afficher</a> - <a href="{{ path('trip_cancel', {'id': trip.id}) }}">Annuler</a></td>
                 {% elseif trip.state.wording == "Annulée"%}
                     <td><a href="{{ path('trip_cancelDetail', {'id': trip.id}) }}">Afficher</a>
+                {% elseif not trip.users.contains(app.user) %}
+                    <td><a href="{{ path('trip_detail', {'id': trip.id}) }}">Afficher</a> - <a href="{{ path('trip_subscribeTrip', {'id': trip.id}) }}">S'inscrire</a></td>
                 {% else %}
-                    <td><a href="{{ path('trip_detail', {'id': trip.id}) }}">Afficher</a> - <a href="{{ path('trip_registrationTrip', {'id': trip.id}) }}">S'inscrire</a></td>
+                    <td><a href="{{ path('trip_detail', {'id': trip.id}) }}">Afficher</a> - <a href="{{ path('trip_unsubscribeTrip', {'id': trip.id}) }}">Se désister</a></td>
                 {% endif %}
 
             </tr>

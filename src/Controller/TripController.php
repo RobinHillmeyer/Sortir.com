@@ -152,8 +152,8 @@ class TripController extends AbstractController
         ]);
     }
 
-    #[Route('/registrationTrip/{id}', name: 'registrationTrip')]
-    public function registrationTrip(EntityManagerInterface $entityManager, TripRepository $tripRepository, int $id): Response
+    #[Route('/subscribeTrip/{id}', name: 'subscribeTrip')]
+    public function subscribeTrip(EntityManagerInterface $entityManager, TripRepository $tripRepository, int $id): Response
     {
         $trip = $tripRepository->find($id);
 
@@ -166,5 +166,22 @@ class TripController extends AbstractController
 
         return $this->redirectToRoute('trip_list');
     }
+
+    #[Route('/unsubscribeTrip/{id}', name: 'unsubscribeTrip')]
+    public function unsubscribeTrip(EntityManagerInterface $entityManager, TripRepository $tripRepository, int $id): Response
+    {
+        $trip = $tripRepository->find($id);
+
+        /**@var \App\Entity\User $user*/
+        $user = $this->getUser();
+
+        $trip->removeUser($user);
+        $entityManager->persist($user);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('trip_list');
+    }
+
+
 
 }
