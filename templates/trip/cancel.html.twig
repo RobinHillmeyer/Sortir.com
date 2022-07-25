@@ -1,0 +1,20 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}
+Annuler une sortie
+{% endblock %}
+
+{% block body %}
+    <h2>Annuler une sortie</h2>
+    <p>Nom de la sortie : {{ trip.name }}</p>
+    <p>Date de la sortie : {{ trip.startDateTime | date('d-m-Y') }}</p>
+    <p>Campus : {{ trip.campus.name }}</p>
+    <p>Lieu : {{ trip.spot.name }}</p>
+    {{ form_start(cancelForm) }}
+    {{ form_widget(cancelForm) }}
+    <button type="submit" class="btn btn-primary">Annuler la sortie</button>
+    <a href="{{ path('trip_list') }}" class="btn btn-secondary">Retour</a>
+    {{ form_end(cancelForm) }}
+{% endblock %}
+

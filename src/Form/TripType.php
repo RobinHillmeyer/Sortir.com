@@ -3,7 +3,6 @@
 namespace App\Form;
 
 use App\Entity\Campus;
-use App\Entity\City;
 use App\Entity\Spot;
 use App\Entity\Trip;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 
 use App\Entity\Trip;
+use App\Form\CancelType;
 use App\Form\TripType;
 use App\Repository\CampusRepository;
 use App\Repository\StateRepository;
@@ -30,7 +31,6 @@ class TripController extends AbstractController
         $tripForm = $this->createForm(TripType::class, $trip);
 
         $tripForm->handleRequest($request);
-
 
         if ($tripForm->isSubmitted() && $tripForm->isValid()) {
             $spot = $tripForm->get('spot1')->getData();
@@ -81,7 +81,6 @@ class TripController extends AbstractController
 
 
 
-
     #[Route('', name: 'list')]
     public function list(TripRepository $tripRepository, CampusRepository $campusRepository): Response
     {
@@ -116,16 +115,30 @@ class TripController extends AbstractController
     }
 
     #[Route('/cancel/{id}', name: 'cancel')]
-    public function cancel(EntityManagerInterface $entityManager, StateRepository $stateRepository, TripRepository $tripRepository, int $id): Response {
+    public function cancel(EntityManagerInterface $entityManager, StateRepository $stateRepository, TripRepository $tripRepository, int $id, Request $request, CampusRepository $campusRepository): Response {
         $trip = $tripRepository->find($id);
-        $trip->setState($stateRepository->find(4));
 
-        $entityManager->persist($trip);
-        $entityManager->flush();
+        $cancelForm = $this->createForm(CancelType::class, $trip);
+        $cancelForm->handleRequest($request);
 
-        return $this->redirectToRoute('trip_list');
-        // TODO render -> page annuler avec formulaire
+        if ($cancelForm->isSubmitted() && $cancelForm->isValid()) {
+            $trip->setState($stateRepository->find(4));
+
+            $entityManager->persist($trip);
+            $entityManager->flush();
+
+            $this->addFlash("success", "La sortie a bien été annulée");
+            return $this->redirectToRoute('trip_list');
+
+        }
+
+        return $this->render('trip/cancel.html.twig', [
+            'cancelForm' => $cancelForm->createView(),
+            'trip' => $trip
+        ]);
     }
+
+
 
 //    #[Route('/lifeCycleTrip/{id}', name: 'lifeCycleTrip')]
 //    public function lifeCycleTrip(EntityManagerInterface $entityManager, StateRepository $stateRepository, TripRepository $tripRepository, int $id): Response {
