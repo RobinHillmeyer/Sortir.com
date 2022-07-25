@@ -44,6 +44,8 @@ class TripController extends AbstractController
                 $trip->setState($stateRepository->find(2));
             }
 
+            $trip->addUser($this->getUser());
+
             $entityManager->persist($trip);
             $entityManager->flush();
 
