@@ -31,8 +31,7 @@ class UserController extends AbstractController
     public function update (Request $request,
                             EntityManagerInterface $manager,
                             UserPasswordHasherInterface $hasher,
-                            SluggerInterface $slugger,
-                            UpdateService $updateService): Response
+                            SluggerInterface $slugger): Response
     {
 
 
