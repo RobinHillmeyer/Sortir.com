@@ -47,7 +47,7 @@
                 <td><a href="{{ path('user_profile', {'name': trip.promoter.name}) }}">{{ trip.promoter.name }}</a></td>
 
                 {% if app.user.id == trip.promoter.id and trip.state.wording == "En Création" %}
-                    <td><a href="{{ path('trip_detail', {'id': trip.id}) }}">Modifier</a> - <a href="{{ path('trip_publish', {'id': trip.id}) }}">Publier</a></td>
+                    <td><a href="{{ path('trip_updateTrip', {'id': trip.id}) }}">Modifier</a> - <a href="{{ path('trip_publish', {'id': trip.id}) }}">Publier</a></td>
                 {% elseif app.user.id == trip.promoter.id and trip.state.wording == "Ouverte" %}
                     <td><a href="{{ path('trip_detail', {'id': trip.id}) }}">Afficher</a> - <a href="{{ path('trip_cancel', {'id': trip.id}) }}">Annuler</a></td>
                 {% else %}

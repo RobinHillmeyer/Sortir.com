@@ -55,6 +55,37 @@ class TripController extends AbstractController
         ]);
     }
 
+
+    #[Route('/modifier-une-sortie/{id}', name: 'updateTrip')]
+    public function updateTrip(EntityManagerInterface $manager, Request $request, TripRepository $tripRepository, int $id): Response
+    {
+        $trip = $tripRepository->find($id);
+        $tripUpdateForm = $this->createForm(TripType::class, $trip);
+        $tripUpdateForm->handleRequest($request);
+
+        if ($tripUpdateForm->isSubmitted() && $tripUpdateForm->isValid()) {
+            $spot = $tripUpdateForm->get('spot1')->getData();
+
+            if ($spot->getName()) {
+                $trip->setSpot($spot);
+            }
+
+            $manager->persist($trip);
+            $manager->flush();
+
+            $this->addFlash('success', 'La sortie a été modifiée.');
+            return $this->redirectToRoute('trip_list');
+        }
+        return $this->render('trip/update.html.twig', [
+            'tripForm' => $tripUpdateForm->createView(),
+            'trip' => $trip
+        ]);
+
+    }
+
+
+
+
     #[Route('', name: 'list')]
     public function list(TripRepository $tripRepository, CampusRepository $campusRepository): Response
     {
