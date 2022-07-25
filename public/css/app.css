@@ -50,18 +50,17 @@ main {
 
 .flash-success {background-color: lawngreen}
 
-i {
+.plus {
     font-size: 3rem;
     transition: 0.3s;
     color: #275ED7;
 }
 
 .check {
-    font-size: 2rem;
+    font-size: 1.5rem;
     color: #43b243;
 }
-
-i:hover {
+.plus:hover {
     cursor: pointer;
     font-size: 3.5rem;
 }
