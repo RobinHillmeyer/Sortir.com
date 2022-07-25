@@ -62,8 +62,7 @@
         </tr>
         </thead>
         <tbody>
-        {# TODO: gerer l'affichage des status "en création" #}
-        {# TODO: gerer l'affichage de la page annulée #}
+
 
         {% for trip in trips %}
             {% if trip.state.wording != "En Création" or trip.promoter.id == app.user.id %}
