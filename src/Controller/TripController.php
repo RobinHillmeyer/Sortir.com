@@ -100,4 +100,26 @@ class TripController extends AbstractController
         // TODO render -> page annuler avec formulaire
     }
 
+//    #[Route('/lifeCycleTrip/{id}', name: 'lifeCycleTrip')]
+//    public function lifeCycleTrip(EntityManagerInterface $entityManager, StateRepository $stateRepository, TripRepository $tripRepository, int $id): Response {
+//        $trip = $tripRepository->find($id);
+//        if ()                                           //start_date_time == dateNow
+//        {
+//            $trip->setState($stateRepository->find(5));
+//        }
+//        elseif ()                                       //duration -- 1minute && duration = 0
+//        {
+//            $trip->setState($stateRepository->find(6));
+//        }
+//        elseif ()                                       //getState(6) >= 30jours
+//        {
+//            $trip->setState($stateRepository->find(7));
+//        }
+//
+//        $entityManager->persist($trip);
+//        $entityManager->flush();
+//
+//        return $this->redirectToRoute('trip_list');
+//    }
+
 }
