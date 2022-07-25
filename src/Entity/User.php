@@ -56,19 +56,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\JoinColumn(nullable: false)]
     private ?Campus $campus = null;
 
-    #[ORM\ManyToMany(targetEntity: Trip::class, inversedBy: 'users')]
-    private Collection $trip;
-
-    #[ORM\OneToMany(mappedBy: 'promoter', targetEntity: Trip::class)]
-    private Collection $trips;
-
     #[ORM\Column(length: 255)]
     private ?string $profileImage = null;
 
+    #[ORM\OneToMany(mappedBy: 'promoter', targetEntity: Trip::class)]
+    private Collection $tripPromoter;
+
+    #[ORM\ManyToMany(targetEntity: Trip::class, inversedBy: 'users')]
+    private Collection $trips;
+
     public function __construct()
     {
+        $this->tripPromoter = new ArrayCollection();
         $this->trips = new ArrayCollection();
-        $this->trip = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -234,6 +234,49 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+
+    public function getProfileImage(): ?string
+    {
+        return $this->profileImage;
+    }
+
+    public function setProfileImage(string $profileImage): self
+    {
+        $this->profileImage = $profileImage;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Trip>
+     */
+    public function getTripPromoter(): Collection
+    {
+        return $this->tripPromoter;
+    }
+
+    public function addTripPromoter(Trip $tripPromoter): self
+    {
+        if (!$this->tripPromoter->contains($tripPromoter)) {
+            $this->tripPromoter[] = $tripPromoter;
+            $tripPromoter->setPromoter($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTripPromoter(Trip $tripPromoter): self
+    {
+        if ($this->tripPromoter->removeElement($tripPromoter)) {
+            // set the owning side to null (unless already changed)
+            if ($tripPromoter->getPromoter() === $this) {
+                $tripPromoter->setPromoter(null);
+            }
+        }
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, Trip>
      */
@@ -246,7 +289,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->trips->contains($trip)) {
             $this->trips[] = $trip;
-            $trip->setUser($this);
         }
 
         return $this;
@@ -254,32 +296,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removeTrip(Trip $trip): self
     {
-        if ($this->trips->removeElement($trip)) {
-            // set the owning side to null (unless already changed)
-            if ($trip->getUser() === $this) {
-                $trip->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Trip>
-     */
-    public function getTrip(): Collection
-    {
-        return $this->trip;
-    }
-
-    public function getProfileImage(): ?string
-    {
-        return $this->profileImage;
-    }
-
-    public function setProfileImage(string $profileImage): self
-    {
-        $this->profileImage = $profileImage;
+        $this->trips->removeElement($trip);
 
         return $this;
     }

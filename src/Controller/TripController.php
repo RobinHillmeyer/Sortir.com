@@ -4,6 +4,7 @@ namespace App\Controller;
 
 
 use App\Entity\Trip;
+use App\Entity\User;
 use App\Form\CancelType;
 use App\Form\TripType;
 use App\Repository\CampusRepository;
@@ -25,7 +26,8 @@ class TripController extends AbstractController
         $trip = new Trip();
 
 
-        $trip->setState($stateRepository->find(1));
+//        $trip->setState($stateRepository->find(1));
+        // TODO : choisir entre id 1 et 2 de state repo
         $trip->setPromoter($this->getUser());
 
         $tripForm = $this->createForm(TripType::class, $trip);
@@ -37,6 +39,10 @@ class TripController extends AbstractController
 
             if ($spot->getName()) {
                 $trip->setSpot($spot);
+            }
+
+            if ($tripForm->getName('create')) {
+                $trip->setState($stateRepository->find(1));
             }
 
             $entityManager->persist($trip);
@@ -114,7 +120,7 @@ class TripController extends AbstractController
         return $this->redirectToRoute('trip_list');
     }
 
-    #[Route('/cancel/{id}', name: 'cancel')]
+    #[Route('/annuler-la-sortie/{id}', name: 'cancel')]
     public function cancel(EntityManagerInterface $entityManager, StateRepository $stateRepository, TripRepository $tripRepository, int $id, Request $request, CampusRepository $campusRepository): Response {
         $trip = $tripRepository->find($id);
 
@@ -145,6 +151,22 @@ class TripController extends AbstractController
         return $this->render('trip/cancelDetail.html.twig', [
             'trip' => $trip
         ]);
+    }
+
+    #[Route('/registrationTrip/{id}', name: 'registrationTrip')]
+    public function registrationTrip(EntityManagerInterface $entityManager, TripRepository $tripRepository, int $id): Response
+    {
+        $trip = $tripRepository->find($id);
+
+        /**@var \App\Entity\User $user*/
+        $user = $this->getUser();
+
+        $trip->addUser($user);
+        $entityManager->persist($user);
+        $entityManager->flush();
+
+//        return $this->redirectToRoute('trip_list');
+        return $this->render('base.html.twig');
     }
 
 }

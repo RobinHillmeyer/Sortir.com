@@ -55,7 +55,7 @@
                 {% elseif trip.state.wording == "Annulée"%}
                     <td><a href="{{ path('trip_cancelDetail', {'id': trip.id}) }}">Afficher</a>
                 {% else %}
-                    <td><a href="{{ path('trip_detail', {'id': trip.id}) }}">Afficher</a> - <a href="#">S'inscrire</a></td>
+                    <td><a href="{{ path('trip_detail', {'id': trip.id}) }}">Afficher</a> - <a href="{{ path('trip_registrationTrip', {'id': trip.id}) }}">S'inscrire</a></td>
                 {% endif %}
 
             </tr>

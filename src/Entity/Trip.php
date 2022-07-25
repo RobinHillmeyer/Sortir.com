@@ -51,19 +51,19 @@ class Trip
     #[ORM\JoinColumn(nullable: false)]
     private ?State $state = null;
 
-    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'trip')]
-    private Collection $users;
-
-    #[ORM\ManyToOne(inversedBy: 'trips')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $promoter = null;
-
     #[ORM\Column]
     #[Assert\LessThanOrEqual(propertyPath: "registrationNumberMax", message: "La sortie est complète")]
     private ?int $registeredNumber = 0;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $cancelMessage = null;
+
+    #[ORM\ManyToOne(inversedBy: 'tripPromoter')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $promoter = null;
+
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'trips')]
+    private Collection $users;
 
     public function __construct()
     {
@@ -187,6 +187,43 @@ class Trip
         return $this;
     }
 
+
+    public function getRegisteredNumber(): ?int
+    {
+        return $this->registeredNumber;
+    }
+
+    public function setRegisteredNumber(int $registeredNumber): self
+    {
+        $this->registeredNumber = $registeredNumber;
+
+        return $this;
+    }
+
+    public function getCancelMessage(): ?string
+    {
+        return $this->cancelMessage;
+    }
+
+    public function setCancelMessage(?string $cancelMessage): self
+    {
+        $this->cancelMessage = $cancelMessage;
+
+        return $this;
+    }
+
+    public function getPromoter(): ?User
+    {
+        return $this->promoter;
+    }
+
+    public function setPromoter(?User $promoter): self
+    {
+        $this->promoter = $promoter;
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, User>
      */
@@ -210,42 +247,6 @@ class Trip
         if ($this->users->removeElement($user)) {
             $user->removeTrip($this);
         }
-
-        return $this;
-    }
-
-    public function getPromoter(): ?User
-    {
-        return $this->promoter;
-    }
-
-    public function setPromoter(?User $promoter): self
-    {
-        $this->promoter = $promoter;
-
-        return $this;
-    }
-
-    public function getRegisteredNumber(): ?int
-    {
-        return $this->registeredNumber;
-    }
-
-    public function setRegisteredNumber(int $registeredNumber): self
-    {
-        $this->registeredNumber = $registeredNumber;
-
-        return $this;
-    }
-
-    public function getCancelMessage(): ?string
-    {
-        return $this->cancelMessage;
-    }
-
-    public function setCancelMessage(?string $cancelMessage): self
-    {
-        $this->cancelMessage = $cancelMessage;
 
         return $this;
     }
