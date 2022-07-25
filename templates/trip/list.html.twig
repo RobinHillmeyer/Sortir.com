@@ -43,7 +43,7 @@
                 <td>{{ trip.name }}</td>
                 <td>{{ trip.startDateTime | date('d-m-Y H:i') }}</td>
                 <td>{{ trip.registrationDeadLine | date('d-m-Y') }}</td>
-                <td>{{ trip.registeredNumber }} / {{ trip.registrationNumberMax }}</td>
+                <td>{{ trip.users | length }} / {{ trip.registrationNumberMax }}</td>
                 <td>{{ trip.state.wording }}</td>
                 <td><i class="check fa-solid fa-check"></i></td>
                 <td><a href="{{ path('user_profile', {'name': trip.promoter.name}) }}">{{ trip.promoter.name }}</a></td>
