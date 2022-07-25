@@ -168,7 +168,7 @@ class TripController extends AbstractController
             $trip->addUser($user);
             $entityManager->persist($user);
             $entityManager->flush();
-            $this->addFlash('success', 'Vous êtres bien inscrit à la sortie');
+            $this->addFlash('success', 'Vous êtres bien inscrit à la sortie '.$trip->getName());
         } else {
             $this->addFlash('error', 'Il n\' y a plus de place dans cette sortie');
         }
@@ -188,6 +188,8 @@ class TripController extends AbstractController
         $trip->removeUser($user);
         $entityManager->persist($user);
         $entityManager->flush();
+
+        $this->addFlash('success', 'Vous vous êtes desisté de la sortie '.$trip->getName());
 
         return $this->redirectToRoute('trip_list');
     }
