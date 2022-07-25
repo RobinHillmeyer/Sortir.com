@@ -20,4 +20,4 @@
 ###< symfony/phpunit-bridge ###
 
 ### Images ###
-#/public/upload_profile/
+/public/upload_profile/
