@@ -23,8 +23,8 @@
                         <li><a href="{{ path('app_logout') }}">Se déconnecter</a></li>
                         <li><a href="{{ path('user_profile', {'name': app.user.name}) }}">Mon profil</a></li>
                 </ul>
-                Date du jour : {{ "now" | date('d/m/Y') }}<br>
-                Participant : {{ app.user.nickname }}
+                <p>Date du jour : {{ "now" | date('d/m/Y') }}<br>
+                Participant : {{ app.user.nickname }}</p>
                 {% endif %}
             </div>
     </header>
