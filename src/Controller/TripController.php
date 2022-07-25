@@ -91,7 +91,7 @@ class TripController extends AbstractController
     #[Route('', name: 'list')]
     public function list(TripRepository $tripRepository, CampusRepository $campusRepository): Response
     {
-        $trips = $tripRepository->findAll();
+        $trips = $tripRepository->findTrips();
         $campus = $campusRepository->findAll();
 
         return $this->render('trip/list.html.twig', [
