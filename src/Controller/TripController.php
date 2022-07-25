@@ -2,16 +2,12 @@
 
 namespace App\Controller;
 
-use App\Entity\Spot;
-use App\Entity\State;
+
 use App\Entity\Trip;
-use App\Entity\User;
-use App\Form\SpotType;
 use App\Form\TripType;
 use App\Repository\CampusRepository;
 use App\Repository\StateRepository;
 use App\Repository\TripRepository;
-use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
