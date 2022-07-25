@@ -133,12 +133,15 @@ class TripController extends AbstractController
         if ($cancelForm->isSubmitted() && $cancelForm->isValid()) {
             $trip->setState($stateRepository->find(4));
 
+            if ($trip->getState()->getWording() == "Ouverte")
             $entityManager->persist($trip);
             $entityManager->flush();
 
             $this->addFlash("success", "La sortie a bien été annulée");
             return $this->redirectToRoute('trip_list');
 
+        } else {
+            $this->addFlash('error', 'La sortie ne peut plus être annulée');
         }
 
         return $this->render('trip/cancel.html.twig', [
