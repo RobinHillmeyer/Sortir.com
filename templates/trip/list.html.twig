@@ -49,7 +49,7 @@
                 {% if app.user.id == trip.promoter.id and trip.state.wording == "En Création" %}
                     <td><a href="{{ path('trip_detail', {'id': trip.id}) }}">Modifier</a> - <a href="{{ path('trip_publish', {'id': trip.id}) }}">Publier</a></td>
                 {% elseif app.user.id == trip.promoter.id and trip.state.wording == "Ouverte" %}
-                    <td><a href="{{ path('trip_detail', {'id': trip.id}) }}">Afficher</a> - <a href="#">Annuler</a></td>
+                    <td><a href="{{ path('trip_detail', {'id': trip.id}) }}">Afficher</a> - <a href="{{ path('trip_cancel', {'id': trip.id}) }}">Annuler</a></td>
                 {% else %}
                     <td><a href="{{ path('trip_detail', {'id': trip.id}) }}">Afficher</a></td>
                 {% endif %}

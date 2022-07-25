@@ -88,8 +88,8 @@ class TripController extends AbstractController
         return $this->redirectToRoute('trip_list');
     }
 
-    #[Route('/cancelled/{id}', name: 'publish')]
-    public function cancelled(EntityManagerInterface $entityManager, StateRepository $stateRepository, TripRepository $tripRepository, int $id): Response {
+    #[Route('/cancel/{id}', name: 'cancel')]
+    public function cancel(EntityManagerInterface $entityManager, StateRepository $stateRepository, TripRepository $tripRepository, int $id): Response {
         $trip = $tripRepository->find($id);
         $trip->setState($stateRepository->find(4));
 
