@@ -164,9 +164,15 @@ class TripController extends AbstractController
         /**@var \App\Entity\User $user*/
         $user = $this->getUser();
 
-        $trip->addUser($user);
-        $entityManager->persist($user);
-        $entityManager->flush();
+        if ($trip->getUsers()->count() < $trip->getRegistrationNumberMax()) {
+            $trip->addUser($user);
+            $entityManager->persist($user);
+            $entityManager->flush();
+            $this->addFlash('success', 'Vous êtres bien inscrit à la sortie');
+        } else {
+            $this->addFlash('error', 'Il n\' y a plus de place dans cette sortie');
+        }
+
 
         return $this->redirectToRoute('trip_list');
     }

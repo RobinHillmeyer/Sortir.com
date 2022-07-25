@@ -50,6 +50,8 @@ main {
 
 .flash-success {background-color: lawngreen}
 
+.flash-error {background-color: red}
+
 .plus {
     font-size: 3rem;
     transition: 0.3s;
