@@ -4,21 +4,49 @@
     <h2>Filtrer les sorties</h2>
 
     
-    <div class="trip-filter">
 
-        <form action="">
-            <p>
-                <label for="campus-select">Campus</label>
-                <select id="campus-select">
+
+    <form action="">
+        <div>
+            <div class="col-md-3">
+                <label for="campus-select" class="col-form-label">Campus</label>
+                <select id="campus-select" class="form-control">
                     <option value="">-- Filtrer par campus --</option>
                     {% for campus in campus %}
                         <option value="{{ campus.name }}">{{ campus.name }}</option>
                     {% endfor %}
                 </select>
-            </p>
-            <button type="submit">Rechercher</button>
-        </form>
-    </div>
+            </div>
+            <div class="col-md-3">
+                <label for="trip-search" class="col-form-label">Le nom de la sortie contient : </label>
+                <input type="search" id="trip-search" class="form-control">
+            </div>
+            <div class="col-md-6">
+                <label for="start" class="col-form-label">Entre : </label>
+                <input type="date" id="start" name="trip-start" value="{{ "now" }}" min="{{ "now" }}" class="form-control">
+                <label for="end" class="col-form-label">et</label>
+                <input type="date" id="end" name="trip-end" class="form-control">
+            </div>
+            <div class="col-md-12">
+                <input type="checkbox" name="provider" id="provider">
+                <label for="provider" class="col-form-label">Sorties dont je suis l'organisateur/trice</label>
+            </div>
+            <div class="col-md-12">
+                <input type="checkbox" name="subscribe" id="subscribe">
+                <label for="subscribe" class="col-form-label">Sorties auxquelles je suis inscrit/e</label>
+            </div>
+            <div class="col-md-12">
+                <input type="checkbox" name="not-subscribe" id="not-subscribe">
+                <label for="not-subscribe" class="col-form-label">Sorties auxquelles je ne suis pas inscrit/e</label>
+            </div>
+            <div class="col-md-12">
+                <input type="checkbox" name="passed-trip" id="passed-trip">
+                <label for="passed-trip" class="col-form-label">Sorties passées</label>
+            </div>
+            <button type="submit" class="btn btn-dark">Rechercher</button>
+        </div>
+    </form>
+
 
     <table class="table table-striped table-hover">
         <thead>
