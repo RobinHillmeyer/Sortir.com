@@ -62,6 +62,9 @@ class Trip
     #[Assert\LessThanOrEqual(propertyPath: "registrationNumberMax", message: "La sortie est complète")]
     private ?int $registeredNumber = 0;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $cancelMessage = null;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -231,6 +234,18 @@ class Trip
     public function setRegisteredNumber(int $registeredNumber): self
     {
         $this->registeredNumber = $registeredNumber;
+
+        return $this;
+    }
+
+    public function getCancelMessage(): ?string
+    {
+        return $this->cancelMessage;
+    }
+
+    public function setCancelMessage(?string $cancelMessage): self
+    {
+        $this->cancelMessage = $cancelMessage;
 
         return $this;
     }
