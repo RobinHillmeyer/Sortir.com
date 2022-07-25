@@ -34,8 +34,6 @@ class Trip
     #[ORM\Column]
     private ?int $registrationNumberMax = null;
 
-    // TODO : mettre le nombre de personnes inscrites en cours
-
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $information = null;
 
