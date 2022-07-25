@@ -25,9 +25,6 @@ class TripController extends AbstractController
     {
         $trip = new Trip();
 
-
-//        $trip->setState($stateRepository->find(1));
-        // TODO : choisir entre id 1 et 2 de state repo
         $trip->setPromoter($this->getUser());
 
         $tripForm = $this->createForm(TripType::class, $trip);
@@ -41,8 +38,10 @@ class TripController extends AbstractController
                 $trip->setSpot($spot);
             }
 
-            if ($tripForm->getName('create')) {
+            if ($tripForm->get('create')->isClicked()) {
                 $trip->setState($stateRepository->find(1));
+            } elseif ($tripForm->get('publish')->isClicked()) {
+                $trip->setState($stateRepository->find(2));
             }
 
             $entityManager->persist($trip);
@@ -165,8 +164,7 @@ class TripController extends AbstractController
         $entityManager->persist($user);
         $entityManager->flush();
 
-//        return $this->redirectToRoute('trip_list');
-        return $this->render('base.html.twig');
+        return $this->redirectToRoute('trip_list');
     }
 
 }
