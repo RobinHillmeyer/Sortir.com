@@ -10,6 +10,7 @@ use App\Form\TripType;
 use App\Repository\CampusRepository;
 use App\Repository\StateRepository;
 use App\Repository\TripRepository;
+use App\Service\LifeCycleTripService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -89,10 +90,11 @@ class TripController extends AbstractController
 
 
     #[Route('', name: 'list')]
-    public function list(TripRepository $tripRepository, CampusRepository $campusRepository): Response
+    public function list(TripRepository $tripRepository, CampusRepository $campusRepository, LifeCycleTripService $cycleTripService): Response
     {
-        $trips = $tripRepository->findTrips();
+        $cycleTripService->lifeCycleTrip();
         $campus = $campusRepository->findAll();
+        $trips = $tripRepository->findTrips();
 
         return $this->render('trip/list.html.twig', [
             'trips' => $trips,

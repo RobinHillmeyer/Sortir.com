@@ -2,10 +2,12 @@
 
 namespace App\Service;
 
+use App\Entity\Trip;
 use App\Repository\StateRepository;
 use App\Repository\TripRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use http\Env\Response;
+use phpDocumentor\Reflection\Types\Void_;
+
 
 class LifeCycleTripService
 {
@@ -15,26 +17,30 @@ class LifeCycleTripService
     {
     }
 
-    public function lifeCycleTrip(int $id): Response
+    public function lifeCycleTrip(): void
     {
-        $trip = $this->tripRepository->find($id);
-        if ($trip->getStartDateTime() >= date() && ($trip->getStartDateTime() + $trip->getDuration()) <= date())  //start_date_time == dateNow -> en cours
-        {
-            $trip->setState($this->stateRepository->find(5));
+        $trips = $this->tripRepository->findTrips();
+        foreach ($trips as $trip) {
+            $duration = $trip->getDuration();
+            $month = date_add($trip->getStartDateTime(), date_interval_create_from_date_string("30 days"));
+            dump($trip);
+            if ($trip->getStartDateTime() >= date('d-m-Y')) {
+                $trip->setState($this->stateRepository->find(5));
+                dump($trip);
+            } elseif ($duration > 0 and $trip->getState()->getId() == 5) {
+                while ($duration > 0) {
+                    $duration--;
+                }
+                $trip->setState($this->stateRepository->find(6));
+                dump($trip);
+            } elseif ($month >= date('d-m-Y')) {
+                $trip->setState($this->stateRepository->find(7));
+                dump($trip);
+            }
+            dump($trip);
+            $this->entityManager->persist($trip);
+            $this->entityManager->flush();
         }
-        elseif (($trip->getStartDateTime() + $trip->getDuration()) > date())   //duration -- 1minute && duration = 0 -> terminée
-        {
-            $trip->setState($this->stateRepository->find(6));
-        }
-        elseif ($trip->getStartDateTime()+30 >= date()) //getState(6) >= 30jours -> historiée
-        {
-            $trip->setState($this->stateRepository->find(7));
-        }
-
-        $this->entityManager->persist($trip);
-        $this->entityManager->flush();
-
-        return $this->redirectToRoute('trip_list');
     }
 
 }
