@@ -39,6 +39,8 @@
 
 {#    <button type="submit" class="btn btn-primary">Modifier une Sortie</button>#}
 {#    <a href="{{ path('trip_publish', {'id': trip.id}) }}" class="btn btn-secondary">Publier la sortie</a>#}
+    {{ form_row(tripForm.create) }}
+    {{ form_row(tripForm.publish) }}
     <!-- Button trigger modal -->
     {#    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#spotModal">#}
     {#        Ajouter un Lieu#}

@@ -60,7 +60,7 @@ class TripController extends AbstractController
 
 
     #[Route('/modifier-une-sortie/{id}', name: 'updateTrip')]
-    public function updateTrip(EntityManagerInterface $manager, Request $request, TripRepository $tripRepository, int $id): Response
+    public function updateTrip(EntityManagerInterface $manager, Request $request, TripRepository $tripRepository, int $id, StateRepository $stateRepository): Response
     {
         $trip = $tripRepository->find($id);
         $tripUpdateForm = $this->createForm(TripType::class, $trip);
@@ -71,6 +71,12 @@ class TripController extends AbstractController
 
             if ($spot->getName()) {
                 $trip->setSpot($spot);
+            }
+
+            if ($tripUpdateForm->get('create')->isClicked()) {
+                $trip->setState($stateRepository->find(1));
+            } elseif ($tripUpdateForm->get('publish')->isClicked()) {
+                $trip->setState($stateRepository->find(2));
             }
 
             $manager->persist($trip);
@@ -137,15 +143,16 @@ class TripController extends AbstractController
         if ($cancelForm->isSubmitted() && $cancelForm->isValid()) {
             $trip->setState($stateRepository->find(4));
 
-            if ($trip->getState()->getWording() == "Ouverte")
-            $entityManager->persist($trip);
-            $entityManager->flush();
+            if ($trip->getState()->getWording() == "Ouverte") {
+                $entityManager->persist($trip);
+                $entityManager->flush();
 
-            $this->addFlash("success", "La sortie a bien été annulée");
-            return $this->redirectToRoute('trip_list');
+                $this->addFlash("success", "La sortie a bien été annulée");
+                return $this->redirectToRoute('trip_list');
 
-        } else {
-            $this->addFlash('error', 'La sortie ne peut plus être annulée');
+            } else {
+                $this->addFlash('error', 'La sortie ne peut plus être annulée');
+            }
         }
 
         return $this->render('trip/cancel.html.twig', [
