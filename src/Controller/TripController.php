@@ -4,7 +4,6 @@ namespace App\Controller;
 
 
 use App\Entity\Trip;
-use App\Entity\User;
 use App\Form\CancelType;
 use App\Form\TripType;
 use App\Repository\CampusRepository;
@@ -128,6 +127,7 @@ class TripController extends AbstractController
     }
 
     #[Route('/annuler-la-sortie/{id}', name: 'cancel')]
+    // TODO: securiser URL cancel
     public function cancel(EntityManagerInterface $entityManager, StateRepository $stateRepository, TripRepository $tripRepository, int $id, Request $request, CampusRepository $campusRepository): Response {
         $trip = $tripRepository->find($id);
 
