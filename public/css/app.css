@@ -12,7 +12,7 @@ body {
 }
 
 header {
-    background: darkgray;
+    background: skyblue;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -67,6 +67,16 @@ main {
     font-size: 3.5rem;
 }
 
+.form-trip{
+    display: flex;
+
+}
+
+/*.spot{*/
+/*    display: inline-block;*/
+
+/*}*/
+
 .image{
     border-radius: 50%;
     width: 200px;
@@ -83,10 +93,15 @@ main {
 }
 
 footer {
-    background: darkgrey;
+    background: skyblue;
     height: 50px;
-    text-align: center;
+
 }
 
+.footer-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 /*TODO continue css*/

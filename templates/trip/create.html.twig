@@ -1,19 +1,26 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    <div class="container">
+    <div class="row">
     {{ form_start(tripForm) }}
 
-
-    {{ form_row(tripForm.name) }}
-    {{ form_row(tripForm.startDateTime) }}
-    {{ form_row(tripForm.registrationDeadLine) }}
-    {{ form_row(tripForm.registrationNumberMax) }}
-    {{ form_row(tripForm.duration) }}
-    {{ form_row(tripForm.information) }}
-    {{ form_row(tripForm.campus) }}
-    {{ form_row(tripForm.spot1.city) }}
-    {{ form_row(tripForm.spot) }}
-
+    <div class="col">
+        {{ form_row(tripForm.name) }}
+        {{ form_row(tripForm.startDateTime) }}
+        {{ form_row(tripForm.registrationDeadLine) }}
+        {{ form_row(tripForm.registrationNumberMax) }}
+        {{ form_row(tripForm.duration) }}
+    </div>
+    <div class="col">
+        {{ form_row(tripForm.information) }}
+        {{ form_row(tripForm.campus) }}
+        {{ form_row(tripForm.spot1.city) }}
+        {{ form_row(tripForm.spot) }}
+        <i class="plus fa-solid fa-circle-plus" data-bs-toggle="modal" data-bs-target="#spotModal"></i>
+    </div>
+    </div>
+    </div>
 
 
 
@@ -40,6 +47,7 @@
 
     {{ form_row(tripForm.create) }}
     {{ form_row(tripForm.publish) }}
+
 {#    <button type="submit" name="validate" value="create" class="btn btn-primary">Enregistrer</button>#}
 {#    <button type="submit" name="validate" value="publish" class="btn btn-primary">Publier la sortie</button>#}
     <a href="{{ path('trip_list') }}" class="btn btn-secondary">Annuler</a>
@@ -49,10 +57,9 @@
 {#    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#spotModal">#}
 {#        Ajouter un Lieu#}
 {#    </button>#}
-    <i class="plus fa-solid fa-circle-plus" data-bs-toggle="modal" data-bs-target="#spotModal"></i>
+
 
     {{ form_end(tripForm) }}
-
 
 
 {% endblock %}
