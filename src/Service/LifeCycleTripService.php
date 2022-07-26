@@ -22,25 +22,29 @@ class LifeCycleTripService
         $trips = $this->tripRepository->findTrips();
         foreach ($trips as $trip) {
             $duration = $trip->getDuration();
-            $month = date_add($trip->getStartDateTime(), date_interval_create_from_date_string("30 days"));
-            dump($trip);
-            if ($trip->getStartDateTime() >= date('d-m-Y')) {
+            $dateStart = clone $trip->getStartDateTime();
+            $dateStart2 = clone $trip->getStartDateTime();
+            $dateStart3 = clone $trip->getStartDateTime();
+            $deadLine = $trip->getRegistrationDeadLine();
+            $month = $dateStart2->modify('+30 days');
+            $dateEnd = $dateStart3->modify("+$duration min");
+            $dateNow = new \DateTime("now");
+
+
+            if ($dateNow >= $deadLine and $trip->getState()->getWording() == "Ouverte") {
+                $trip->setState($this->stateRepository->find(3));
+            } elseif ($dateStart <= $dateNow and $trip->getState()->getWording() == "Clôturée") {
                 $trip->setState($this->stateRepository->find(5));
-                dump($trip);
-            } elseif ($duration > 0 and $trip->getState()->getId() == 5) {
-                while ($duration > 0) {
-                    $duration--;
-                }
+            } elseif ($dateEnd < $dateNow and $trip->getState()->getWording() == "Activité en cours") {
                 $trip->setState($this->stateRepository->find(6));
-                dump($trip);
-            } elseif ($month >= date('d-m-Y')) {
+            } elseif ($month <= $dateNow) {
                 $trip->setState($this->stateRepository->find(7));
-                dump($trip);
             }
-            dump($trip);
+
             $this->entityManager->persist($trip);
             $this->entityManager->flush();
         }
+
     }
 
 }

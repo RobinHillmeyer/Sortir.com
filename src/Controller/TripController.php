@@ -92,9 +92,11 @@ class TripController extends AbstractController
     #[Route('', name: 'list')]
     public function list(TripRepository $tripRepository, CampusRepository $campusRepository, LifeCycleTripService $cycleTripService): Response
     {
-        $cycleTripService->lifeCycleTrip();
-        $campus = $campusRepository->findAll();
         $trips = $tripRepository->findTrips();
+        $cycleTripService->lifeCycleTrip();
+
+        $campus = $campusRepository->findAll();
+
 
         return $this->render('trip/list.html.twig', [
             'trips' => $trips,
@@ -162,7 +164,7 @@ class TripController extends AbstractController
     }
 
     #[Route('/subscribeTrip/{id}', name: 'subscribeTrip')]
-    public function subscribeTrip(EntityManagerInterface $entityManager, TripRepository $tripRepository, int $id): Response
+    public function subscribeTrip(EntityManagerInterface $entityManager, TripRepository $tripRepository, int $id, StateRepository $stateRepository): Response
     {
         $trip = $tripRepository->find($id);
 
@@ -175,24 +177,30 @@ class TripController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Vous êtres bien inscrit à la sortie : '.$trip->getName());
+            $this->addFlash('success', 'Vous êtes bien inscrit à la sortie : '.$trip->getName());
         } else {
             $this->addFlash('error', 'Il n\' y a plus de place dans cette sortie');
         }
 
+        if ($trip->getUsers()->count() == $trip->getRegistrationNumberMax()) {
+            $trip->setState($stateRepository->find(3));
+            $entityManager->persist($trip);
+            $entityManager->flush();
+        }
 
         return $this->redirectToRoute('trip_list');
     }
 
     #[Route('/unsubscribeTrip/{id}', name: 'unsubscribeTrip')]
-    public function unsubscribeTrip(EntityManagerInterface $entityManager, TripRepository $tripRepository, int $id): Response
+    public function unsubscribeTrip(EntityManagerInterface $entityManager, TripRepository $tripRepository, int $id, StateRepository $stateRepository): Response
     {
         $trip = $tripRepository->find($id);
 
         /**@var \App\Entity\User $user*/
         $user = $this->getUser();
+        $dateNow = new \DateTime("now");
 
-        if ($trip->getState()->getWording() == "Ouverte") {
+        if ($trip->getStartDateTime() >= $dateNow) {
             $trip->removeUser($user);
             $entityManager->persist($user);
             $entityManager->flush();
@@ -200,6 +208,12 @@ class TripController extends AbstractController
             $this->addFlash('success', 'Vous vous êtes desisté de la sortie : '.$trip->getName());
         } else {
             $this->addFlash('error', 'Il est trop tard pour de désinscrire de la sortie');
+        }
+
+        if ($trip->getUsers()->count() != $trip->getRegistrationNumberMax()) {
+            $trip->setState($stateRepository->find(2));
+            $entityManager->persist($trip);
+            $entityManager->flush();
         }
 
         return $this->redirectToRoute('trip_list');
