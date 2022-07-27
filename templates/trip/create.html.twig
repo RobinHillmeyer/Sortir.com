@@ -1,25 +1,53 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="container">
     <div class="row">
-    {{ form_start(tripForm) }}
+        <div class="col-md-12">
+            {{ form_start(tripForm) }}
 
-    <div class="col">
-        {{ form_row(tripForm.name) }}
-        {{ form_row(tripForm.startDateTime) }}
-        {{ form_row(tripForm.registrationDeadLine) }}
-        {{ form_row(tripForm.registrationNumberMax) }}
-        {{ form_row(tripForm.duration) }}
-    </div>
-    <div class="col">
-        {{ form_row(tripForm.information) }}
-        {{ form_row(tripForm.campus) }}
-        {{ form_row(tripForm.spot1.city) }}
-        {{ form_row(tripForm.spot) }}
-        <i class="plus fa-solid fa-circle-plus" data-bs-toggle="modal" data-bs-target="#spotModal"></i>
-    </div>
-    </div>
+            <div class="row">
+                <div class="col-md-6">
+                    {{ form_row(tripForm.name) }}
+                </div>
+                <div class="col-md-6">
+
+                    {{ form_row(tripForm.duration) }}
+                </div>
+                <div class="col-md-6">
+
+                    {{ form_row(tripForm.startDateTime) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(tripForm.campus) }}
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    {{ form_row(tripForm.registrationDeadLine) }}
+                </div>
+                <div class="col-md-6 ">
+                    {{ form_row(tripForm.spot1.city) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(tripForm.registrationNumberMax) }}
+                </div>
+                <div class="col-md-6">
+                    <div class="row align-items-center">
+                        <div class="col-md-10">
+                            {{ form_row(tripForm.spot) }}
+                        </div>
+                        <div class="col">
+                            <i class="plus fa-solid fa-circle-plus" data-bs-toggle="modal" data-bs-target="#spotModal"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(tripForm.information) }}
+                </div>
+
+            </div>
+        </div>
     </div>
 
 
@@ -44,20 +72,17 @@
     </div>
 
 
-
-    {{ form_row(tripForm.create) }}
-    {{ form_row(tripForm.publish) }}
-
-{#    <button type="submit" name="validate" value="create" class="btn btn-primary">Enregistrer</button>#}
-{#    <button type="submit" name="validate" value="publish" class="btn btn-primary">Publier la sortie</button>#}
-    <a href="{{ path('trip_list') }}" class="btn btn-secondary">Annuler</a>
-
-
-    <!-- Button trigger modal -->
-{#    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#spotModal">#}
-{#        Ajouter un Lieu#}
-{#    </button>#}
-
+    <div class="row">
+        <div class="col">
+            {{ form_row(tripForm.create) }}
+        </div>
+        <div class="col">
+            {{ form_row(tripForm.publish) }}
+        </div>
+        <div class="col">
+            <a href="{{ path('trip_list') }}" class="btn btn-secondary">Annuler</a>
+        </div>
+    </div>
 
     {{ form_end(tripForm) }}
 

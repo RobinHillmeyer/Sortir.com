@@ -40,6 +40,10 @@ main {
     flex: 1;
 }
 
+table {
+    margin-top: 3rem;
+}
+
 .flash {
     padding: 20px;
     font-weight: bold;
@@ -67,9 +71,14 @@ main {
     font-size: 3.5rem;
 }
 
-.form-trip{
-    display: flex;
+legend {
+    display: none;
+}
 
+textarea {
+    resize: none;
+    height: 150px;
+    margin-bottom: 3rem;
 }
 
 /*.spot{*/
