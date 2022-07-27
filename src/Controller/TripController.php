@@ -26,11 +26,9 @@ class TripController extends AbstractController
     public function create(EntityManagerInterface $entityManager, Request $request, StateRepository $stateRepository): Response
     {
         $trip = new Trip();
-
         $trip->setPromoter($this->getUser());
 
         $tripForm = $this->createForm(TripType::class, $trip);
-
         $tripForm->handleRequest($request);
 
         if ($tripForm->isSubmitted() && $tripForm->isValid()) {
@@ -65,6 +63,7 @@ class TripController extends AbstractController
     public function updateTrip(EntityManagerInterface $manager, Request $request, TripRepository $tripRepository, int $id, StateRepository $stateRepository): Response
     {
         $trip = $tripRepository->find($id);
+
         $tripUpdateForm = $this->createForm(TripType::class, $trip);
         $tripUpdateForm->handleRequest($request);
 
@@ -104,11 +103,9 @@ class TripController extends AbstractController
         $searchForm->handleRequest($request);
         $trips = $tripRepository->findSearch($data, $this->getUser());
 
-//        $trips = $tripRepository->findTrips();
         $cycleTripService->lifeCycleTrip();
 
         $campus = $campusRepository->findAll();
-
 
         return $this->render('trip/list.html.twig', [
             'trips' => $trips,
@@ -187,8 +184,9 @@ class TripController extends AbstractController
         $user = $this->getUser();
 
         if ($trip->getUsers()->count() < $trip->getRegistrationNumberMax() and $trip->getState()->getWording() == "Ouverte") {
-            // TODO: ajouter une contrainte de date dans le if
+
             $trip->addUser($user);
+
             $entityManager->persist($user);
             $entityManager->flush();
 
@@ -199,6 +197,7 @@ class TripController extends AbstractController
 
         if ($trip->getUsers()->count() == $trip->getRegistrationNumberMax()) {
             $trip->setState($stateRepository->find(3));
+
             $entityManager->persist($trip);
             $entityManager->flush();
         }
@@ -217,6 +216,7 @@ class TripController extends AbstractController
 
         if ($trip->getStartDateTime() >= $dateNow) {
             $trip->removeUser($user);
+
             $entityManager->persist($user);
             $entityManager->flush();
 
@@ -227,13 +227,11 @@ class TripController extends AbstractController
 
         if ($trip->getUsers()->count() != $trip->getRegistrationNumberMax()) {
             $trip->setState($stateRepository->find(2));
+
             $entityManager->persist($trip);
             $entityManager->flush();
         }
 
         return $this->redirectToRoute('trip_list');
     }
-
-
-
 }

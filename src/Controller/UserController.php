@@ -26,6 +26,7 @@ class UserController extends AbstractController
             "user" => $user
         ]);
     }
+
     #[Route('/modifier-profil', name: 'update')]
     public function update (Request $request,
                             EntityManagerInterface $manager,
@@ -33,19 +34,20 @@ class UserController extends AbstractController
                             SluggerInterface $slugger): Response
     {
 
-
         $userForm = $this->createForm(UserType::class, $this->getUser());
         $userForm->handleRequest($request);
 
 
         if ($userForm->isSubmitted() && $userForm->isValid()) {
 
-//            $updateService->uploadPicture();
+    // Upload Image
+
             /**@var UploadedFile $uploadedFile */
             $uploadedFile = $userForm->get('profileImage')->getData();
 
             if ($uploadedFile) {
                 $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
+
                 $safeFilename = $slugger->slug($originalFilename);
                 $newFilename = $safeFilename.'-'.uniqid().'.'.$uploadedFile->guessExtension();
 
@@ -55,11 +57,12 @@ class UserController extends AbstractController
                         $newFilename
                     );
                 } catch (FileException $e) {
-
+                    $this->addFlash('error', 'Echec Upload photo de profile');
                 }
                 $this->getUser()->setProfileImage($newFilename);
             }
 
+    // Hashage MDP
             $plaintextPassword = $userForm->get('password')->getData();
 
             if ($plaintextPassword){

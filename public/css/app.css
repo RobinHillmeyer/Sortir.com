@@ -66,6 +66,7 @@ table {
     font-size: 1.5rem;
     color: #43b243;
 }
+
 .plus:hover {
     cursor: pointer;
     font-size: 3.5rem;
@@ -81,12 +82,7 @@ textarea {
     margin-bottom: 3rem;
 }
 
-/*.spot{*/
-/*    display: inline-block;*/
-
-/*}*/
-
-.image{
+.image {
     border-radius: 50%;
     width: 200px;
     height: 200px;
@@ -104,13 +100,10 @@ textarea {
 footer {
     background: skyblue;
     height: 50px;
-
 }
 
-.footer-container{
+.footer-container {
     display: flex;
     justify-content: center;
     align-items: center;
 }
-
-/*TODO continue css*/
