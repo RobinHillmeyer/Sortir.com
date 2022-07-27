@@ -19,7 +19,7 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        //création de 10 utilisateurs
+        //Création de 10 utilisateurs
         $this->manager = $manager;
         $this->addUser();
     }

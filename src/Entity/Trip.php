@@ -7,7 +7,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use phpDocumentor\Reflection\DocBlock\Tags\Var_;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TripRepository::class)]
@@ -25,10 +24,11 @@ class Trip
     private ?\DateTimeInterface $startDateTime = null;
 
     #[ORM\Column(type: Types::INTEGER)]
+    #[Assert\Length(min: 1, minMessage: "La durée doit être supérieur a 0")]
     private ?int $duration = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    #[Assert\LessThanOrEqual(propertyPath: "startDateTime")]
+    #[Assert\LessThanOrEqual(propertyPath: "startDateTime", message: "La date de cloture doit être inférieur a la date de sortie")]
     private ?\DateTimeInterface $registrationDeadLine = null;
 
     #[ORM\Column]
@@ -64,7 +64,6 @@ class Trip
     {
         $this->users = new ArrayCollection();
     }
-
 
     public function getId(): ?int
     {
@@ -142,9 +141,6 @@ class Trip
 
         return $this;
     }
-
-
-
 
     public function getSpot(): ?Spot
     {

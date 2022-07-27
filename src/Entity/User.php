@@ -32,21 +32,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     #[Assert\NotBlank]
-    #[Assert\Length(min: 8)]
+    #[Assert\Length(min: 8, minMessage: "le mot de passe doit faire au moins 8 caractères")]
     private ?string $password = null;
 
     #[ORM\Column(length: 50)]
     private ?string $name = null;
 
     #[ORM\Column(length: 50)]
-
     private ?string $firstname = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\Regex(pattern:'\+?([0-9]{2})-?([0-9]{3})-?([0-9]{6,7})')]
     private ?string $phone = null;
 
     #[ORM\Column(nullable: true)]
-//    TODO : rendre actif
     private ?bool $isActive = null;
 
     #[ORM\Column(length: 50, nullable: false, unique: true)]
@@ -105,8 +104,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return (string) $this->email;
     }
-
-
 
     /**
      * @see UserInterface
@@ -233,7 +230,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
 
     public function getProfileImage(): ?string
     {
