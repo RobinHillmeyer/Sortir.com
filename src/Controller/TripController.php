@@ -94,7 +94,7 @@ class TripController extends AbstractController
 
         } else {
 
-            $this->addFlash('error', 'La sortie ne peut plus être modifiée');
+            $this->addFlash('error', 'La sortie ne peut pas être modifiée');
             return $this->redirectToRoute('trip_list');
         }
 
@@ -171,7 +171,7 @@ class TripController extends AbstractController
         return $this->redirectToRoute('trip_list');
     }
 
-    #[Route('/annuler-la-sortie/{id}', name: 'cancel')]
+    #[Route('/cancel/{id}', name: 'cancel')]
     public function cancel(EntityManagerInterface $entityManager, StateRepository $stateRepository, TripRepository $tripRepository, int $id, Request $request, CampusRepository $campusRepository): Response {
         $trip = $tripRepository->find($id);
         $user = $this->getUser();
@@ -254,7 +254,7 @@ class TripController extends AbstractController
         $user = $this->getUser();
         $dateNow = new \DateTime("now");
 
-        if ($trip->getStartDateTime() >= $dateNow) {
+        if ($trip->getStartDateTime() >= $dateNow and $user->getTrips() === $trip->getUsers()) {
             $trip->removeUser($user);
 
             $entityManager->persist($user);

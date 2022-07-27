@@ -52,9 +52,11 @@ table {
     border-radius: 5px;
 }
 
-.flash-success {background-color: lawngreen}
+.flash-success {background-color: #b2f872
+}
 
-.flash-error {background-color: red}
+.flash-error {background-color: #f65a5a
+}
 
 .plus {
     font-size: 3rem;
