@@ -40,6 +40,9 @@ class TripType extends AbstractType
             ])
             ->add('duration', IntegerType::class, [
                 'label' => 'Durée : ',
+                'attr' => [
+                    'placeholder' => 'en minutes'
+                ]
             ])
             ->add('information', TextareaType::class, [
                 'label' => 'Description et infos : '
