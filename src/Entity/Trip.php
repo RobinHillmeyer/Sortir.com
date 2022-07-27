@@ -21,6 +21,7 @@ class Trip
     private ?string $name = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Assert\GreaterThanOrEqual("tomorrow")]
     private ?\DateTimeInterface $startDateTime = null;
 
     #[ORM\Column(type: Types::INTEGER)]
@@ -29,6 +30,7 @@ class Trip
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Assert\LessThanOrEqual(propertyPath: "startDateTime", message: "La date de cloture doit être inférieur a la date de sortie")]
+    #[Assert\GreaterThanOrEqual("tomorrow")]
     private ?\DateTimeInterface $registrationDeadLine = null;
 
     #[ORM\Column]
