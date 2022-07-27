@@ -2,18 +2,24 @@
 
 {% block body %}
     <div class="img-profile">
-        <img src="{{ asset('upload_profile/' ~ user.profileImage) }}" alt="{{ user.name }}" class="image">
-    </div>
-    <h2>{{ user.name }}</h2>
-    <p>Prénom : {{ user.firstname }}</p>
-    <p>Nom : {{ user.name }}</p>
-    <p>Téléphone : {{ user.phone }}</p>
-    <p>Email : {{ user.email }}</p>
-    <p>Campus : {{ user.campus.name }}</p>
 
-    {% if app.user == user %}
-        <a href="{{ path('user_update', {'name': user.name}) }}">Modifier mon profil</a>
-    {% endif %}
+        <img src="{{ asset('upload_profile/' ~ user.profileImage) }}" alt="{{ user.name }}" class="image">
+
+        <div class="profile-info">
+            <h2>{{ user.nickname }}</h2>
+            <p>Prénom : {{ user.firstname }}</p>
+            <p>Nom : {{ user.name }}</p>
+            <p>Téléphone : {{ user.phone }}</p>
+            <p>Email : {{ user.email }}</p>
+            <p>Campus : {{ user.campus.name }}</p>
+            {% if app.user == user %}
+                <a href="{{ path('user_update', {'name': user.name}) }}">Modifier mon profil</a>
+            {% endif %}
+        </div>
+
+    </div>
+
+
 
 {% endblock %}
 

@@ -3,20 +3,24 @@
 {% block body %}
 
     <h2>Afficher</h2>
-    <div class="trip_container">
-        <p>Nom de la Sortie : {{ trip.name }}</p>
-        <p>Date et heure de la sortie : {{ trip.startDateTime | date('d-m-Y H:i') }}</p>
-        <p>Date limite d'inscription : {{ trip.registrationDeadLine | date('d-m-Y') }}</p>
-        <p>Nombre de places : {{ trip.registrationNumberMax }}</p>
-        <p>Durée : {{ trip.duration }} minutes</p>
-        <p>Description : {{ trip.information }}</p>
-        <p>Etat : {{ trip.state.wording }}</p>
-        <p>Campus : {{ trip.campus.name }}</p>
-        <p>Lieu : {{ trip.spot.name }}</p>
-        <p>Rue : {{ trip.spot.street }}</p>
-        <p>Code postal : {{ trip.spot.city.zipCode }}</p>
-        <p>Latitude : {{ trip.spot.latitude }}</p>
-        <p>Longitude : {{ trip.spot.longitude }}</p>
+    <div class="trip-info">
+        <div class="left-column">
+            <p><b>Nom de la Sortie</b> : {{ trip.name }}</p>
+            <p><b>Date et heure de la sortie</b> : {{ trip.startDateTime | date('d-m-Y H:i') }}</p>
+            <p><b>Date limite d'inscription</b> : {{ trip.registrationDeadLine | date('d-m-Y') }}</p>
+            <p><b>Nombre de places</b> : {{ trip.registrationNumberMax }}</p>
+            <p><b>Durée</b> : {{ trip.duration }} minutes</p>
+            <p><b>Description</b> : {{ trip.information }}</p>
+        </div>
+        <div class="right-column">
+            <p><b>Etat</b> : {{ trip.state.wording }}</p>
+            <p><b>Campus</b> : {{ trip.campus.name }}</p>
+            <p><b>Lieu</b> : {{ trip.spot.name }}</p>
+            <p><b>Rue</b> : {{ trip.spot.street }}</p>
+            <p><b>Code postal</b> : {{ trip.spot.city.zipCode }}</p>
+            <p><b>Latitude</b> : {{ trip.spot.latitude }}</p>
+            <p><b>Longitude</b> : {{ trip.spot.longitude }}</p>
+        </div>
     </div>
 
     <table class="table table-striped table-hover">
