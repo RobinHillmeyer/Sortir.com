@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 
+use App\Data\SearchData;
 use App\Entity\Trip;
 use App\Form\CancelType;
+use App\Form\SearchType;
 use App\Form\TripType;
 use App\Repository\CampusRepository;
 use App\Repository\StateRepository;
@@ -95,9 +97,14 @@ class TripController extends AbstractController
 
 
     #[Route('', name: 'list')]
-    public function list(TripRepository $tripRepository, CampusRepository $campusRepository, LifeCycleTripService $cycleTripService): Response
+    public function list(TripRepository $tripRepository, CampusRepository $campusRepository, LifeCycleTripService $cycleTripService, Request $request): Response
     {
-        $trips = $tripRepository->findTrips();
+        $data = new SearchData();
+        $searchForm = $this->createForm(SearchType::class, $data);
+        $searchForm->handleRequest($request);
+        $trips = $tripRepository->findSearch($data, $this->getUser());
+
+//        $trips = $tripRepository->findTrips();
         $cycleTripService->lifeCycleTrip();
 
         $campus = $campusRepository->findAll();
@@ -105,7 +112,8 @@ class TripController extends AbstractController
 
         return $this->render('trip/list.html.twig', [
             'trips' => $trips,
-            'campus' => $campus
+            'campus' => $campus,
+            'searchForm' => $searchForm->createView()
         ]);
     }
 

@@ -2,8 +2,9 @@
 
 namespace App\Repository;
 
-use App\Entity\State;
+use App\Data\SearchData;
 use App\Entity\Trip;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -55,28 +56,56 @@ class TripRepository extends ServiceEntityRepository
         return $result;
     }
 
-//    /**
-//     * @return Trip[] Returns an array of Trip objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('s.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function findSearch(SearchData $searchData, User $user): array
+    {
+        $query = $this->createQueryBuilder('t')
+            ->join('t.campus', 'c')
+            ->join('t.users', 'u')
+            ->join('t.promoter', 'p')
+            ->select('t', 'c', 'u', 'p');
 
-//    public function findOneBySomeField($value): ?Trip
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        if (!empty($searchData->campus)) {
+            $query = $query->andWhere('c.id IN (:campus)')
+                ->setParameter('campus', $searchData->campus);
+        }
+
+        if (!empty($searchData->keyWord)) {
+            $query = $query->andWhere('t.name LIKE :keyWord')
+                ->setParameter('keyWord', "%{$searchData->keyWord}%");
+        }
+
+        if (!empty($searchData->dateFrom)) {
+            $query = $query->andWhere('t.startDateTime >= :dateFrom')
+                ->setParameter('dateFrom', $searchData->dateFrom);
+        }
+
+        if (!empty($searchData->dateTo)) {
+            $query = $query->andWhere('t.startDateTime <= :dateTo')
+                ->setParameter('dateTo', $searchData->dateTo);
+        }
+
+        if (!empty($searchData->isPromoter)) {
+            $query = $query->andWhere('p.id = :userId')
+                ->setParameter('userId', $user->getId());
+        }
+
+        if (!empty($searchData->isSub)) {
+            $query = $query->andWhere('u.id = :userId')
+                ->setParameter('userId', $user->getId());
+        }
+
+        if (!empty($searchData->isntSub)) {
+            $query = $query->andWhere('u.id != :userId')
+                ->setParameter('userId', $user->getId());
+        }
+
+        if (!empty($searchData->isTripEnd)) {
+            $query = $query->andWhere('t.state = 6');
+        }
+
+
+
+        return $query->getQuery()->getResult();
+    }
+
 }
