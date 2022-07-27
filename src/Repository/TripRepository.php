@@ -53,6 +53,7 @@ class TripRepository extends ServiceEntityRepository
 
         $query = $queryBuilder->getQuery();
         $result = $query->getResult();
+
         return $result;
     }
 
@@ -103,9 +104,6 @@ class TripRepository extends ServiceEntityRepository
             $query = $query->andWhere('t.state = 6');
         }
 
-
-
         return $query->getQuery()->getResult();
     }
-
 }
