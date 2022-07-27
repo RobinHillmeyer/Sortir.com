@@ -156,27 +156,33 @@ class TripController extends AbstractController
     }
 
     #[Route('/annuler-la-sortie/{id}', name: 'cancel')]
-    // TODO: securiser URL cancel
     public function cancel(EntityManagerInterface $entityManager, StateRepository $stateRepository, TripRepository $tripRepository, int $id, Request $request, CampusRepository $campusRepository): Response {
         $trip = $tripRepository->find($id);
+        $user = $this->getUser();
 
         $cancelForm = $this->createForm(CancelType::class, $trip);
         $cancelForm->handleRequest($request);
 
-        if ($cancelForm->isSubmitted() && $cancelForm->isValid()) {
-            $trip->setState($stateRepository->find(4));
+        if ($trip->getState()->getWording() === "En Création" and $trip->getPromoter() === $user){
+            if ($cancelForm->isSubmitted() && $cancelForm->isValid()) {
+                $trip->setState($stateRepository->find(4));
 
-            if ($trip->getState()->getWording() == "Ouverte") {
-                $entityManager->persist($trip);
-                $entityManager->flush();
+                if ($trip->getState()->getWording() == "Ouverte") {
+                    $entityManager->persist($trip);
+                    $entityManager->flush();
 
-                $this->addFlash("success", "La sortie a bien été annulée");
-                return $this->redirectToRoute('trip_list');
+                    $this->addFlash("success", "La sortie a bien été annulée");
+                    return $this->redirectToRoute('trip_list');
 
-            } else {
-                $this->addFlash('error', 'La sortie ne peut plus être annulée');
+                } else {
+                    $this->addFlash('error', 'La sortie ne peut plus être annulée');
+                }
             }
+        } else {
+            $this->addFlash('error', 'Vous ne pouvez pas annuler cette sortie');
+            return $this->redirectToRoute('trip_list');
         }
+
 
         return $this->render('trip/cancel.html.twig', [
             'cancelForm' => $cancelForm->createView(),
