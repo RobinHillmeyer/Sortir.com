@@ -65,11 +65,12 @@ class TripController extends AbstractController
     {
 
         $trip = $tripRepository->find($id);
+        $user = $this->getUser();
 
         $tripUpdateForm = $this->createForm(TripType::class, $trip);
         $tripUpdateForm->handleRequest($request);
 
-        if ($trip->getState()->getWording() == "En Création") {
+        if ($trip->getState()->getWording() == "En Création" and $trip->getPromoter() === $user) {
 
             if ($tripUpdateForm->isSubmitted() && $tripUpdateForm->isValid()) {
                 $spot = $tripUpdateForm->get('spot1')->getData();
