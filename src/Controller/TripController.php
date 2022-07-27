@@ -84,13 +84,11 @@ class TripController extends AbstractController
                     $trip->setState($stateRepository->find(2));
                 }
 
-
                 $manager->persist($trip);
                 $manager->flush();
 
                 $this->addFlash('success', 'La sortie a été modifiée.');
                 return $this->redirectToRoute('trip_list');
-
             }
 
         } else {
@@ -140,11 +138,18 @@ class TripController extends AbstractController
 
     #[Route('/publish/{id}', name: 'publish')]
     public function publish(EntityManagerInterface $entityManager, StateRepository $stateRepository, TripRepository $tripRepository, int $id): Response {
+        $user = $this->getUser();
         $trip = $tripRepository->find($id);
-        $trip->setState($stateRepository->find(2));
 
-        $entityManager->persist($trip);
-        $entityManager->flush();
+        if ($user === $trip->getPromoter()) {
+            $trip->setState($stateRepository->find(2));
+
+            $entityManager->persist($trip);
+            $entityManager->flush();
+        } else {
+            $this->addFlash('error', 'Vous n\'avez pas les droits sur cette sortie');
+        }
+
 
         return $this->redirectToRoute('trip_list');
     }
