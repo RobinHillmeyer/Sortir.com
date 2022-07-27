@@ -165,7 +165,7 @@ class TripController extends AbstractController
 
             $this->addFlash('success', 'La sortie a bien été supprimé');
         } else {
-            $this->addFlash('error', 'Vous ne pouvez pas supprimer cette sortie');
+            $this->addFlash('error', 'Tu nous aura pas comme ça Sylvain :)');
         }
 
         return $this->redirectToRoute('trip_list');
@@ -195,7 +195,7 @@ class TripController extends AbstractController
                 }
             }
         } else {
-            $this->addFlash('error', 'Vous ne pouvez pas annuler cette sortie');
+            $this->addFlash('error', 'Tu nous aura pas comme ça Sylvain :)');
             return $this->redirectToRoute('trip_list');
         }
 
@@ -231,7 +231,7 @@ class TripController extends AbstractController
 
             $this->addFlash('success', 'Vous êtes bien inscrit à la sortie : '.$trip->getName());
         } else {
-            $this->addFlash('error', 'Il n\' y a plus de place dans cette sortie');
+            $this->addFlash('error', 'Tu nous aura pas comme ça Sylvain :)');
         }
 
         if ($trip->getUsers()->count() === $trip->getRegistrationNumberMax()) {
@@ -267,7 +267,7 @@ class TripController extends AbstractController
 
             $this->addFlash('success', 'Vous vous êtes desisté de la sortie : '.$trip->getName());
         } else {
-            $this->addFlash('error', 'Il est trop tard pour de désinscrire de la sortie');
+            $this->addFlash('error', 'Tu nous aura pas comme ça Sylvain :)');
         }
 
 
