@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+
     <h2>Afficher</h2>
     <div class="trip_container">
         <p>Nom de la Sortie : {{ trip.name }}</p>
@@ -8,7 +9,6 @@
         <p>Date limite d'inscription : {{ trip.registrationDeadLine | date('d-m-Y') }}</p>
         <p>Nombre de places : {{ trip.registrationNumberMax }}</p>
         <p>Durée : {{ trip.duration }} minutes</p>
-    {#    TODO: convertir minutes en heure #}
         <p>Description : {{ trip.information }}</p>
         <p>Etat : {{ trip.state.wording }}</p>
         <p>Campus : {{ trip.campus.name }}</p>
@@ -18,8 +18,6 @@
         <p>Latitude : {{ trip.spot.latitude }}</p>
         <p>Longitude : {{ trip.spot.longitude }}</p>
     </div>
-
-
 
     <table class="table table-striped table-hover">
         <thead>

@@ -14,6 +14,7 @@
 
 </head>
 <body>
+
     <header>
         <a href="{{ path('trip_list') }}" class="logo-link"><img src="{{ asset('img/logo.png') }}" alt="Logo Sortir.com" class="logo"></a>
             <div class="nav-bar">
@@ -29,7 +30,6 @@
             </div>
     </header>
 
-
     {# read and display all flash messages #}
     {% for label, messages in app.flashes %}
         {% for message in messages %}
@@ -40,7 +40,6 @@
     {% endfor %}
 
     <main>
-
         <div class="container">
             {% block body %}
             {% endblock %}
@@ -52,5 +51,6 @@
             <div>&copy; {{ "now" | date('Y') }} Sortir.com</div>
         </div>
     </footer>
+
 </body>
 </html>

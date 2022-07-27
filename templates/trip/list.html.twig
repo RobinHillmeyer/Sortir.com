@@ -20,7 +20,6 @@
         </thead>
         <tbody>
 
-
         {% for trip in trips %}
             {% if  trip.state.wording != "Activité Historisée" %}
                 {% if trip.state.wording != "En Création" or trip.promoter.id == app.user.id %}
@@ -55,8 +54,6 @@
                 {% endif %}
             {% endif %}
         {% endfor %}
-
-
 
         </tbody>
     </table>
