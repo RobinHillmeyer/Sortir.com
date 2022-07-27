@@ -20,7 +20,7 @@ class UserController extends AbstractController
     #[Route('', name: 'profile')]
     public function profile(string $name, UserRepository $userRepository): Response
     {
-        $user = $userRepository->find($name);
+        $user = $userRepository->findOneByName($name);
 
         return $this->render('user/profile.html.twig', [
             "user" => $user

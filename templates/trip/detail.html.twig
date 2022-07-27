@@ -29,7 +29,7 @@
         <tbody>
         {% for user in users %}
             <tr>
-                <td>{{ user.nickname }}</td>
+                <td><a href="{{ path('user_profile', {'name': user.name}) }}">{{ user.nickname }}</a></td>
                 <td>{{ user.firstname }} {{ user.name | upper }}</td>
             </tr>
         {% endfor %}
