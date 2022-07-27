@@ -148,7 +148,7 @@ class TripController extends AbstractController
             $entityManager->persist($trip);
             $entityManager->flush();
         } else {
-            $this->addFlash('error', 'Vous n\'avez pas les droits sur cette sortie');
+            $this->addFlash('error', 'Tu nous aura pas comme ça Sylvain :)');
         }
 
         return $this->redirectToRoute('trip_list');
@@ -252,7 +252,7 @@ class TripController extends AbstractController
         $user = $this->getUser();
         $dateNow = new \DateTime("now");
 
-        if ($trip->getStartDateTime() >= $dateNow and $user->getTrips() === $trip->getUsers()) {
+        if ($trip->getStartDateTime() >= $dateNow and $trip->getUsers()->contains($user)) {
             $trip->removeUser($user);
 
             $entityManager->persist($user);
