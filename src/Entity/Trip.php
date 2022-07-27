@@ -32,6 +32,7 @@ class Trip
     private ?\DateTimeInterface $registrationDeadLine = null;
 
     #[ORM\Column]
+    #[Assert\Length(min: 2, minMessage: "Il faut au moins 2 participants")]
     private ?int $registrationNumberMax = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
