@@ -9,6 +9,7 @@ use App\Form\CancelType;
 use App\Form\SearchType;
 use App\Form\TripType;
 use App\Repository\CampusRepository;
+use App\Repository\SpotRepository;
 use App\Repository\StateRepository;
 use App\Repository\TripRepository;
 use App\Service\LifeCycleTripService;
@@ -60,37 +61,48 @@ class TripController extends AbstractController
 
 
     #[Route('/modifier-une-sortie/{id}', name: 'updateTrip')]
-    public function updateTrip(EntityManagerInterface $manager, Request $request, TripRepository $tripRepository, int $id, StateRepository $stateRepository): Response
+    public function updateTrip(EntityManagerInterface $manager, Request $request, TripRepository $tripRepository, int $id, StateRepository $stateRepository, SpotRepository $spotRepository): Response
     {
+
         $trip = $tripRepository->find($id);
 
         $tripUpdateForm = $this->createForm(TripType::class, $trip);
         $tripUpdateForm->handleRequest($request);
 
-        if ($tripUpdateForm->isSubmitted() && $tripUpdateForm->isValid()) {
-            $spot = $tripUpdateForm->get('spot1')->getData();
+        if ($trip->getState()->getWording() == "En Création") {
 
-            if ($spot->getName()) {
-                $trip->setSpot($spot);
+            if ($tripUpdateForm->isSubmitted() && $tripUpdateForm->isValid()) {
+                $spot = $tripUpdateForm->get('spot1')->getData();
+
+                if ($spot->getName()) {
+                    $trip->setSpot($spot);
+                }
+
+                if ($tripUpdateForm->get('create')->isClicked()) {
+                    $trip->setState($stateRepository->find(1));
+                } elseif ($tripUpdateForm->get('publish')->isClicked()) {
+                    $trip->setState($stateRepository->find(2));
+                }
+
+
+                $manager->persist($trip);
+                $manager->flush();
+
+                $this->addFlash('success', 'La sortie a été modifiée.');
+                return $this->redirectToRoute('trip_list');
+
             }
 
-            if ($tripUpdateForm->get('create')->isClicked()) {
-                $trip->setState($stateRepository->find(1));
-            } elseif ($tripUpdateForm->get('publish')->isClicked()) {
-                $trip->setState($stateRepository->find(2));
-            }
+        } else {
 
-            $manager->persist($trip);
-            $manager->flush();
-
-            $this->addFlash('success', 'La sortie a été modifiée.');
+            $this->addFlash('error', 'La sortie ne peut plus être modifiée');
             return $this->redirectToRoute('trip_list');
         }
+
         return $this->render('trip/update.html.twig', [
             'tripForm' => $tripUpdateForm->createView(),
             'trip' => $trip
         ]);
-
     }
 
 
