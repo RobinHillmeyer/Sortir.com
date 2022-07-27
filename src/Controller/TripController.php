@@ -70,7 +70,7 @@ class TripController extends AbstractController
         $tripUpdateForm = $this->createForm(TripType::class, $trip);
         $tripUpdateForm->handleRequest($request);
 
-        if ($trip->getState()->getWording() == "En Création" and $trip->getPromoter() === $user) {
+        if ($trip->getState()->getWording() === "En Création" and $trip->getPromoter() === $user) {
 
             if ($tripUpdateForm->isSubmitted() && $tripUpdateForm->isValid()) {
                 $spot = $tripUpdateForm->get('spot1')->getData();
@@ -142,7 +142,7 @@ class TripController extends AbstractController
         $user = $this->getUser();
         $trip = $tripRepository->find($id);
 
-        if ($user === $trip->getPromoter()) {
+        if ($trip->getState()->getWording() === "En Création" and $trip->getPromoter() === $user) {
             $trip->setState($stateRepository->find(2));
 
             $entityManager->persist($trip);
@@ -151,6 +151,22 @@ class TripController extends AbstractController
             $this->addFlash('error', 'Vous n\'avez pas les droits sur cette sortie');
         }
 
+        return $this->redirectToRoute('trip_list');
+    }
+
+    #[Route('/delete/{id}', name: 'delete')]
+    public function delete(EntityManagerInterface $entityManager, TripRepository$tripRepository, int $id) {
+        $user = $this->getUser();
+        $trip = $tripRepository->find($id);
+
+        if ($trip->getState()->getWording() === "En Création" and $trip->getPromoter() === $user) {
+            $entityManager->remove($trip);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'La sortie a bien été supprimé');
+        } else {
+            $this->addFlash('error', 'Vous ne pouvez pas supprimer cette sortie');
+        }
 
         return $this->redirectToRoute('trip_list');
     }
@@ -207,7 +223,7 @@ class TripController extends AbstractController
         /**@var \App\Entity\User $user*/
         $user = $this->getUser();
 
-        if ($trip->getUsers()->count() < $trip->getRegistrationNumberMax() and $trip->getState()->getWording() == "Ouverte") {
+        if ($trip->getUsers()->count() < $trip->getRegistrationNumberMax() and $trip->getState()->getWording() === "Ouverte") {
 
             $trip->addUser($user);
 
@@ -219,7 +235,7 @@ class TripController extends AbstractController
             $this->addFlash('error', 'Il n\' y a plus de place dans cette sortie');
         }
 
-        if ($trip->getUsers()->count() == $trip->getRegistrationNumberMax()) {
+        if ($trip->getUsers()->count() === $trip->getRegistrationNumberMax()) {
             $trip->setState($stateRepository->find(3));
 
             $entityManager->persist($trip);
