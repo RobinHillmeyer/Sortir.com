@@ -76,6 +76,12 @@
         <div class="col">
             {{ form_row(tripForm.publish) }}
         </div>
+        <div class="col">
+            <a href="{{ path('trip_list') }}" class="btn btn-danger">Supprimer la sortie</a>
+        </div>
+        <div class="col">
+            <a href="{{ path('trip_list') }}" class="btn btn-secondary">Annuler</a>
+        </div>
     </div>
 
     {{ form_end(tripForm) }}
