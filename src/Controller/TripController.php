@@ -220,7 +220,6 @@ class TripController extends AbstractController
     {
         $trip = $tripRepository->find($id);
 
-        /**@var \App\Entity\User $user*/
         $user = $this->getUser();
 
         if ($trip->getUsers()->count() < $trip->getRegistrationNumberMax() and $trip->getState()->getWording() === "Ouverte") {
@@ -250,7 +249,6 @@ class TripController extends AbstractController
     {
         $trip = $tripRepository->find($id);
 
-        /**@var \App\Entity\User $user*/
         $user = $this->getUser();
         $dateNow = new \DateTime("now");
 
@@ -260,17 +258,19 @@ class TripController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
+            if ($trip->getUsers()->count() != $trip->getRegistrationNumberMax()) {
+                $trip->setState($stateRepository->find(2));
+
+                $entityManager->persist($trip);
+                $entityManager->flush();
+            }
+
             $this->addFlash('success', 'Vous vous êtes desisté de la sortie : '.$trip->getName());
         } else {
             $this->addFlash('error', 'Il est trop tard pour de désinscrire de la sortie');
         }
 
-        if ($trip->getUsers()->count() != $trip->getRegistrationNumberMax()) {
-            $trip->setState($stateRepository->find(2));
 
-            $entityManager->persist($trip);
-            $entityManager->flush();
-        }
 
         return $this->redirectToRoute('trip_list');
     }
