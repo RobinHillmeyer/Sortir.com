@@ -2,12 +2,9 @@
 
 namespace App\Service;
 
-use App\Entity\Trip;
 use App\Repository\StateRepository;
 use App\Repository\TripRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use phpDocumentor\Reflection\Types\Void_;
-
 
 class LifeCycleTripService
 {
@@ -21,6 +18,7 @@ class LifeCycleTripService
     {
         $trips = $this->tripRepository->findTrips();
         foreach ($trips as $trip) {
+
             $duration = $trip->getDuration();
             $dateStart = clone $trip->getStartDateTime();
             $dateStart2 = clone $trip->getStartDateTime();
@@ -29,7 +27,6 @@ class LifeCycleTripService
             $month = $dateStart2->modify('+30 days');
             $dateEnd = $dateStart3->modify("+$duration min");
             $dateNow = new \DateTime("now");
-
 
             if ($dateNow >= $deadLine and $trip->getState()->getWording() == "Ouverte") {
                 $trip->setState($this->stateRepository->find(3));
