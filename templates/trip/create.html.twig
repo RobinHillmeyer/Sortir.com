@@ -1,6 +1,8 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+
+    <h2>Créer une sortie</h2>
     <div class="row">
         <div class="col-md-12">
             {{ form_start(tripForm) }}
@@ -69,7 +71,9 @@
         </div>
     </div>
 
-    <div class="row w-50">
+    <div style="
+    justify-content: space-between;
+    display: flex;">
         <div class="col">
             {{ form_row(tripForm.create) }}
         </div>
