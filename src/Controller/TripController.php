@@ -179,7 +179,7 @@ class TripController extends AbstractController
         $cancelForm = $this->createForm(CancelType::class, $trip);
         $cancelForm->handleRequest($request);
 
-        if ($trip->getState()->getWording() === "En Création" and $trip->getPromoter() === $user){
+        if ($trip->getState()->getWording() === "Ouverte" and $trip->getPromoter() === $user){
             if ($cancelForm->isSubmitted() && $cancelForm->isValid()) {
                 $trip->setState($stateRepository->find(4));
 
